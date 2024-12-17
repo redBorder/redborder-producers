@@ -1,4 +1,6 @@
 #!/bin/bash
+
+# This script runs on separate screens sessions, every main producer in live directory
 # To view the running screen session:
 # - To watch and attach to screen: screen -r mitre_wide_attack
 # - Detach from screen: Ctrl+A then D
