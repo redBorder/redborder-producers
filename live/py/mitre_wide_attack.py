@@ -13,20 +13,20 @@ def usage():
 # Array of scripts to execute in sequence
 SCRIPTS_PATH = [
     # Add paths to your attack scripts here, one per line
-'/root/vimesa/scripts/attacks/at1_reconocimiento_scan.py',
-'/root/vimesa/scripts/attacks/at2_resource_development_ssl.py',
-'/root/vimesa/scripts/attacks/at3.py',
-'/etc/synthetic_producer/config/vault_new_powershell.yml',
-'/root/vimesa/scripts/attacks/at5_persistence_backdoor.py',
-'/root/vimesa/scripts/attacks/at6.py',
-'/root/vimesa/scripts/attacks/at7_defense_evasion.py',
-'/root/vimesa/scripts/attacks/at8_credential_access.py',
-'/root/vimesa/scripts/attacks/at9_lateral_movement.py',
-'/root/vimesa/scripts/attacks/at9_discovery.py',
-'/root/vimesa/scripts/attacks/at10_collection_screen.py',
-'/root/vimesa/scripts/attacks/at11_exfiltration_dropbox.py',
-'/root/vimesa/scripts/attacks/at12_cnc.py',
-'/root/vimesa/scripts/attacks/at13_impact_ransom.py'
+    '/usr/lib/redborder/producers/live/attacks/at1_reconocimiento_scan.py',
+    '/usr/lib/redborder/producers/live/attacks/at2_resource_development_ssl.py',
+    '/usr/lib/redborder/producers/live/attacks/at3.py',
+    '/etc/synthetic_producer/config/vault_new_powershell.yml',
+    '/usr/lib/redborder/producers/live/attacks/at5_persistence_backdoor.py',
+    '/usr/lib/redborder/producers/live/attacks/at6.py',
+    '/usr/lib/redborder/producers/live/attacks/at7_defense_evasion.py',
+    '/usr/lib/redborder/producers/live/attacks/at8_credential_access.py',
+    '/usr/lib/redborder/producers/live/attacks/at9_lateral_movement.py',
+    '/usr/lib/redborder/producers/live/attacks/at9_discovery.py',
+    '/usr/lib/redborder/producers/live/attacks/at10_collection_screen.py',
+    '/usr/lib/redborder/producers/live/attacks/at11_exfiltration_dropbox.py',
+    '/usr/lib/redborder/producers/live/attacks/at12_cnc.py',
+    '/usr/lib/redborder/producers/live/attacks/at13_impact_ransom.py'
 ]
 
 import os
