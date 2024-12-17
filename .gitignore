@@ -1,4 +1,5 @@
 __pycache__/
 .Python
 .vscode/*
-packaging/rpm/*
+packaging/rpm/pkgs/*
+packaging/rpm/SOURCES/*
