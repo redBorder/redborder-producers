@@ -1,54 +1,63 @@
 %define _redborder_producers_release 1
-Name:     redborder-producers
-Version:  %{__version}
-Release:  %{__release}%{?dist}
-Summary:  RedBorder Producers Package
-License:  GNU AGPLv3
-Group:   Development/Libraries
+
+Name:    redborder-producers
+Version: %{__version}
+Release: %{_redborder_producers_release}%{?dist}
+Summary: This project is a collection of producers for the redborder platform.
+
+Group: Development/Libraries
+License: GNU AGPLv3
 URL:  https://github.com/redBorder/%{name}
 Source0: %{name}-%{version}.tar.gz
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
+BuildRequires: gcc, make
 BuildRequires: python3
+BuildRequires: python3-devel
 BuildRequires: python3-pip
 BuildRequires: python3-setuptools
+BuildRequires: jq
+BuildRequires: coreutils
+BuildRequires: rpm-build
 
-%global debug_package %{nil}
+Requires: bash
+Requires: python3
+Requires: python3-setuptools
+Requires: jq
+Requires: coreutils
 
 %description
 %{summary}
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -qn %{name}-%{version}
+
+%build
 
 %install
-rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/%{name}
+# Directorios base
 mkdir -p %{buildroot}/usr/lib/redborder/bin
-mkdir -p %{buildroot}/usr/lib/redborder/producers/py/
-mkdir -p %{buildroot}/usr/lib/redborder/producers/json/
-mkdir -p target
-touch target/%{name}-%{version}-selfcontained.jar
-install -D -m 644 target/%{name}-%{version}-selfcontained.jar %{buildroot}/usr/share/%{name}
-ln -s /usr/share/%{name}/%{name}-%{version}-selfcontained.jar %{buildroot}/usr/lib/redborder/%{name}.jar
-install -D -m 755 rb_start_synthetic_producers.sh %{buildroot}/usr/lib/redborder/bin/rb_start_synthetic_producers.sh
-install -D -m 755 producers/py/*.py %{buildroot}/usr/lib/redborder/producers/py/
-install -D -m 644 producers/json/*.json %{buildroot}/usr/lib/redborder/producers/json/
-pip3 install -r requirements.txt
+mkdir -p %{buildroot}/usr/lib/redborder/producers/py
+mkdir -p %{buildroot}/usr/lib/redborder/producers/json
+mkdir -p %{buildroot}/usr/share/%{name}
 
-%clean
-rm -rf %{buildroot}
+# Instalar scripts de shell
+install -m 755 rb_start_synthetic_producers.sh %{buildroot}/usr/lib/redborder/bin/
 
-%pre
-getent group %{name} >/dev/null || groupadd -r %{name}
-getent passwd %{name} >/dev/null || \
-    useradd -r -g %{name} -d / -s /sbin/nologin \
-    -c "User of %{name} service" %{name}
-exit 0
+# Instalar scripts de Python
+install -m 755 producers/py/*.py %{buildroot}/usr/lib/redborder/producers/py/
+
+# Instalar archivos JSON
+install -m 644 producers/json/*.json %{buildroot}/usr/lib/redborder/producers/json/
+
+# Instalar otros archivos necesarios
+install -m 644 %{name}.jar %{buildroot}/usr/lib/redborder/
 
 %files
 %defattr(755,root,root)
 /usr/lib/redborder/bin/rb_start_synthetic_producers.sh
 /usr/lib/redborder/producers/py/*.py
+
 %defattr(644,root,root)
 /usr/share/%{name}
 /usr/lib/redborder/%{name}.jar
@@ -56,6 +65,8 @@ exit 0
 
 %changelog
 * Thu Jan 16 2025 Luis Blanco <ljblanco@redborder.com> - 0.0.2-1
-- renaming the paths. Split python code and json files.
+- Improved file permissions and added missing dependencies.
+- Corrected installation paths for Python and JSON files.
+- Removed unnecessary %clean section.
 * Tue Dec 17 2024 Luis Blanco <ljblanco@redborder.com> - 0.0.1-1
-- first spec version
+- Initial spec file version.

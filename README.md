@@ -11,3 +11,12 @@ At least one of these packages must be installed:
 * redborder-ips
 # Main command
 rb_start_synthetic_producers.sh: Starts the producers in pararell by using screen instances, one for each data source. The command is not part of this repo, but it is the main command to start the producers. It is particullar for live and not tested. Needs to be generalized.
+
+# Building the rpm package
+On Release section, you can find already stable rpms, but if you want to build the rpm from the source code. You can execute the following command on top of the repository path:
+
+```bash
+sudo make rpm
+```
+
+For this feature, mock is required to be installed.
