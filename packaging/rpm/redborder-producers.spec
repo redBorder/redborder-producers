@@ -41,16 +41,10 @@ mkdir -p %{buildroot}/usr/lib/redborder/producers/py
 mkdir -p %{buildroot}/usr/lib/redborder/producers/json
 mkdir -p %{buildroot}/usr/share/%{name}
 
-# Instalar scripts de shell
-install -m 755 rb_start_synthetic_producers.sh %{buildroot}/usr/lib/redborder/bin/
+install -m 755 resources/bin/rb_start_synthetic_producers.sh %{buildroot}/usr/lib/redborder/bin/
+install -m 755 resources/producers/py/*.py %{buildroot}/usr/lib/redborder/producers/py/
+install -m 644 resources/json/*.json %{buildroot}/usr/lib/redborder/producers/json/
 
-# Instalar scripts de Python
-install -m 755 producers/py/*.py %{buildroot}/usr/lib/redborder/producers/py/
-
-# Instalar archivos JSON
-install -m 644 producers/json/*.json %{buildroot}/usr/lib/redborder/producers/json/
-
-# Instalar otros archivos necesarios
 install -m 644 %{name}.jar %{buildroot}/usr/lib/redborder/
 
 %files
