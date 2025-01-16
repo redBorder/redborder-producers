@@ -26,6 +26,8 @@ Requires: python3-setuptools
 Requires: jq
 Requires: coreutils
 
+%define debug_package %{nil}
+
 %description
 %{summary}
 
@@ -45,8 +47,6 @@ install -m 755 resources/bin/rb_start_synthetic_producers.sh %{buildroot}/usr/li
 install -m 755 resources/producers/py/*.py %{buildroot}/usr/lib/redborder/producers/py/
 install -m 644 resources/json/*.json %{buildroot}/usr/lib/redborder/producers/json/
 
-install -m 644 %{name}.jar %{buildroot}/usr/lib/redborder/
-
 %files
 %defattr(755,root,root)
 /usr/lib/redborder/bin/rb_start_synthetic_producers.sh
@@ -54,7 +54,6 @@ install -m 644 %{name}.jar %{buildroot}/usr/lib/redborder/
 
 %defattr(644,root,root)
 /usr/share/%{name}
-/usr/lib/redborder/%{name}.jar
 /usr/lib/redborder/producers/json/*.json
 
 %changelog
