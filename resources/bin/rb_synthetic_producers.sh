@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 # This script runs on separate screens sessions, every main producer in live directory
 # To view the running screen session:
