@@ -75,13 +75,14 @@ def random_mac():
     return f"{random.randint(0, 255):02x}:{random.randint(0, 255):02x}:{random.randint(0, 255):02x}:{random.randint(0, 255):02x}:{random.randint(0, 255):02x}:{random.randint(0, 255):02x}"
 
 def random_port():
-  random.choice(list(range(10000,60000)))
+  return random.choice(list(range(10000,60000)))
 
 def random_malicious_ip():
-  random.choice(MALICIOUS_IPS)
+  return random.choice(MALICIOUS_IPS)
 
 def random_wan():
   return random.choice(wan_devices)
+
 def random_vendor():
    return random.choice([
        "Cisco Systems, Inc",
