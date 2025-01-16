@@ -58,7 +58,7 @@ install -m 755 resources/producers/py/at8_credential_access.py %{buildroot}/usr/
 install -m 755 resources/producers/py/at9_discovery.py %{buildroot}/usr/lib/redborder/producers/py/
 install -m 755 resources/producers/py/at9_lateral_movement.py %{buildroot}/usr/lib/redborder/producers/py/
 install -m 755 resources/producers/py/mitre_wide_attack.py %{buildroot}/usr/lib/redborder/producers/py/
-install -m 755 resources/producers/py/monitor\ copy.py %{buildroot}/usr/lib/redborder/producers/py/
+install -m 755 resources/producers/py/monitor_copy.py %{buildroot}/usr/lib/redborder/producers/py/
 install -m 755 resources/producers/py/monitor.py %{buildroot}/usr/lib/redborder/producers/py/
 install -m 755 resources/producers/py/producer_traffic.py %{buildroot}/usr/lib/redborder/producers/py/
 install -m 755 resources/producers/py/scanner_producer.py %{buildroot}/usr/lib/redborder/producers/py/
@@ -89,7 +89,7 @@ install -m 644 resources/json/*.json %{buildroot}/usr/lib/redborder/producers/js
 /usr/lib/redborder/producers/py/at9_discovery.py
 /usr/lib/redborder/producers/py/at9_lateral_movement.py
 /usr/lib/redborder/producers/py/mitre_wide_attack.py
-/usr/lib/redborder/producers/py/monitor\ copy.py
+/usr/lib/redborder/producers/py/monitor_copy.py
 /usr/lib/redborder/producers/py/monitor.py
 /usr/lib/redborder/producers/py/producer_traffic.py
 /usr/lib/redborder/producers/py/scanner_producer.py
