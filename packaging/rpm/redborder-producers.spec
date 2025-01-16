@@ -43,7 +43,7 @@ mkdir -p %{buildroot}/usr/lib/redborder/producers/py
 mkdir -p %{buildroot}/usr/lib/redborder/producers/json
 mkdir -p %{buildroot}/usr/share/%{name}
 
-install -m 755 resources/bin/rb_start_synthetic_producers.sh %{buildroot}/usr/lib/redborder/bin/
+install -m 755 resources/bin/rb_synthetic_producers.sh %{buildroot}/usr/lib/redborder/bin/
 install -m 755 resources/producers/py/at10_collection_screen.py %{buildroot}/usr/lib/redborder/producers/py/
 install -m 755 resources/producers/py/at11_exfiltration_dropbox.py %{buildroot}/usr/lib/redborder/producers/py/
 install -m 755 resources/producers/py/at12_cnc.py %{buildroot}/usr/lib/redborder/producers/py/
@@ -73,7 +73,7 @@ install -m 644 resources/json/*.json %{buildroot}/usr/lib/redborder/producers/js
 
 %files
 %defattr(755,root,root)
-/usr/lib/redborder/bin/rb_start_synthetic_producers.sh
+/usr/lib/redborder/bin/rb_synthetic_producers.sh
 
 /usr/lib/redborder/producers/py/at10_collection_screen.py
 /usr/lib/redborder/producers/py/at11_exfiltration_dropbox.py
