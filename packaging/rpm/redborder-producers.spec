@@ -22,6 +22,7 @@ BuildRequires: rpm-build
 
 Requires: bash
 Requires: python3
+Requires: pip
 Requires: python3-setuptools
 Requires: jq
 Requires: coreutils
@@ -33,8 +34,6 @@ Requires: coreutils
 
 %prep
 %setup -qn %{name}-%{version}
-
-%build
 
 %install
 # Directorios base
@@ -71,6 +70,8 @@ install -m 644 resources/producers/py/device.py %{buildroot}/usr/lib/redborder/p
 
 install -m 644 resources/json/*.json %{buildroot}/usr/lib/redborder/producers/json/
 
+install -m 644 requirements.txt %{buildroot}/usr/lib/redborder/producers/
+
 %files
 %defattr(755,root,root)
 /usr/lib/redborder/bin/rb_synthetic_producers.sh
@@ -102,6 +103,10 @@ install -m 644 resources/json/*.json %{buildroot}/usr/lib/redborder/producers/js
 /usr/lib/redborder/producers/py/vulnerability.py
 /usr/lib/redborder/producers/py/assets.py
 /usr/lib/redborder/producers/py/device.py
+/usr/lib/redborder/producers/requirements.txt
+
+%post
+pip install -r /usr/lib/redborder/producers/requirements.txt
 
 %changelog
 * Thu Jan 16 2025 Luis Blanco <ljblanco@redborder.com> - 0.0.2-1
