@@ -5,21 +5,16 @@
 # - To watch and attach to screen: screen -r mitre_wide_attack
 # - Detach from screen: Ctrl+A then D
 
-#TO Recover:
-  # screen -dmS vault ./vimesa/scripts/attacks/vault.py 
-	# screen -dmS traffic_namespace ./vimesa/scripts/feature/impro/traffic/producer_traffic.py 
-  # vs
-  # screen -dmS traffic_with_sense ./vimesa/scripts/attacks/traffic.py -d -1
-	# screen -dmS monitor_routers ./vimesa/scripts/attacks/monitor.py -d -1
-	# screen -dmS mitre_wide_attack ./vimesa/scripts/attacks/mitre_wide_attack.py 
+
 while getopts "hfs:" opt; do
   case $opt in
     h)
-      echo "Usage: $0 [-s screen_name] [-f --fast]"
-      # echo "Starts the mitre_wide_attack.py script in a screen session"
-      Starts the mitre_wide_attack.py script in a screen session
-      echo "-f: enable fast attack mode, to jump sleep times"
-      python3 mitre_wide_attack.py -h
+      # echo "Usage: $0 [-s screen_name] [-f --fast]"
+      # # echo "Starts the mitre_wide_attack.py script in a screen session"
+
+      # Starts the mitre_wide_attack.py script in a screen session
+      # echo "-f: enable fast attack mode, to jump sleep times"
+      # python3 mitre_wide_attack.py -h
       exit 0
       ;;
     f)
@@ -34,9 +29,20 @@ while getopts "hfs:" opt; do
       ;;
   esac
 done
-SCREEN_NAME=${SCREEN_NAME:-mitre_wide_attack}
 
-echo "Restarting mitre_wide_attack.py"
-screen -X -S ${SCREEN_NAME} quit 2>/dev/null || true
-screen -dmS ${SCREEN_NAME} python3 /usr/lib/redborder/producers/live/mitre_wide_attack.py ${FAST_MODE:+--fast}
+# /usr/lib/redborder/bin/rb_synthetic_producer.rb
+
+if [ -z "${SCREEN_NAME}" ]; then
+  SCREEN_NAMES=("mitre_wide_attack" "vault")
+  SCREEN_NAMES=("traffic_namespace" "traffic_with_sense" "mitre_wide_attack" "monitor_routers" "vault")
+else
+  SCREEN_NAMES=("${SCREEN_NAME}")
+fi
+
+for SCREEN_NAME in "${SCREEN_NAMES[@]}"; do
+  echo "Restarting screen instance ${SCREEN_NAME}"  
+  screen -X -S ${SCREEN_NAME} quit 2>/dev/null || true # Kill screen instance if exists
+  screen -dmS ${SCREEN_NAME} python3 /usr/lib/redborder/producers/${SCREEN_NAME}.py #${FAST_MODE:+--fast}
+done
+
 echo "Screen instance ${SCREEN_NAME} created. Watch it running screen -r ${SCREEN_NAME}"
