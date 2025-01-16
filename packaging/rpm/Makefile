@@ -10,7 +10,6 @@ RESULT_DIR?=pkgs
 
 all: rpm
 
-
 SOURCES:
 	mkdir -p SOURCES
 
@@ -22,7 +21,6 @@ archive: SOURCES
 build_prepare: archive
 	mkdir -p $(RESULT_DIR)
 	rm -f $(RESULT_DIR)/$(PACKAGE_NAME)*.rpm
-
 
 srpm: build_prepare
 	/usr/bin/mock \
