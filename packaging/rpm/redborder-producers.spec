@@ -29,7 +29,7 @@ mkdir -p target
 touch target/%{name}-%{version}-selfcontained.jar
 install -D -m 644 target/%{name}-%{version}-selfcontained.jar %{buildroot}/usr/share/%{name}
 ln -s /usr/share/%{name}/%{name}-%{version}-selfcontained.jar %{buildroot}/usr/lib/redborder/%{name}.jar
-install -D -m 755 rb_live_synthetic_producer.sh %{buildroot}/usr/lib/redborder/bin/rb_live_synthetic_producer.sh
+install -D -m 755 rb_start_synthetic_producers.sh %{buildroot}/usr/lib/redborder/bin/rb_start_synthetic_producers.sh
 install -D -m 755 live/py/*.py %{buildroot}/usr/lib/redborder/producers/live/
 pip3 install -r requirements.txt
 
@@ -45,7 +45,7 @@ exit 0
 
 %files
 %defattr(755,root,root)
-/usr/lib/redborder/bin/rb_live_synthetic_producer.sh
+/usr/lib/redborder/bin/rb_start_synthetic_producers.sh
 /usr/lib/redborder/producers/live/*
 %defattr(644,root,root)
 /usr/share/%{name}
