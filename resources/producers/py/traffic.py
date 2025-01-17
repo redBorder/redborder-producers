@@ -19,7 +19,6 @@ def generate_event():
   in_out = [lan_device, wan_device]
   shuffle(in_out)
   src_device, dst_device = in_out
-  sensor = random.choice(assets.mirror_devices)
   direction = 'upstream' if src_device == lan_device else 'downstream'
   domain = '.'.join(wan_device.url.split('.')[-2:])
   www = 'www.' + domain
