@@ -41,4 +41,6 @@ def get_random_sensor(type='flow'):
   sensors = []
   if type == 'flow':
     sensors = FLOW_SENSORS
+  else:
+    raise ValueError(f"Not recognized sensor type: {type}")
   return choice(sensors)
