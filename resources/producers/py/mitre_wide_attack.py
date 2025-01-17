@@ -6,7 +6,10 @@ def usage():
   This script is used to run different incidentes that are following a full path of Mitre tactics, by running the corresponding scripts.
   Each of the scripts is responsible for running the incident that triggers the corresponding tactic.
   The orden is left to right, corresponding on the column order of the orginal mitre matrix
-  On start, this script will create an instace in screen named "mitre_wide_attack" and will repeat itself every 2 hours.
+  On start, this script will create an instace in screen named "mitre_wide_attack" and will repeat itself every 1 hour. So.
+  At start it will simulate multiple events of the detection of the first mitre tactic: a recognition phase.
+  After 1/13 hours, it will simulate the second tactic, and so on.
+  At the end of the loop, it will print what's the next time the script will restart the loop again.
   '''
   print(__doc__)
   exit()
