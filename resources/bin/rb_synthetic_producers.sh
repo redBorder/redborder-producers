@@ -53,11 +53,17 @@ if [ -z "$ACTION" ] || [[ ! "$ACTION" =~ ^(start|restart|stop)$ ]]; then
 fi
 # /usr/lib/redborder/bin/rb_synthetic_producer.rb
 
+VALID_SCREEN_NAMES=("traffic_namespace" "traffic_with_sense" "mitre_wide_attack" "monitor_routers" "vault")
 if [ -z "${SCREEN_NAME}" ]; then
   SCREEN_NAMES=("mitre_wide_attack" "vault")
   SCREEN_NAMES=("traffic_namespace" "traffic_with_sense" "mitre_wide_attack" "monitor_routers" "vault")
 else
   SCREEN_NAMES=("${SCREEN_NAME}")
+  if [[ ! " ${VALID_SCREEN_NAMES[@]} " =~ " ${SCREEN_NAME} " ]]; then
+    echo "Error: Invalid screen name '${SCREEN_NAME}'" >&2
+    usage
+    exit 1
+  fi
 fi
 
 for SCREEN_NAME in "${SCREEN_NAMES[@]}"; do
