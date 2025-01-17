@@ -18,6 +18,22 @@ sig_ids = [1, 2, 3, 4, 5]  # Add appropriate signature IDs
 
 fake = Faker()
 
+def get_sensor_info():
+    sensor = random.choice(assets.mirror_devices)
+    return {
+        "sensor_ip": sensor.ip, 
+        "sensor_name": sensor.name, 
+        "sensor_uuid": sensor.uuid,
+        "namespace": "Namespace Level Alfa", 
+        "namespace_uuid": "352369f8-60fb-4b72-a603-d1d8393cca0a",
+        "organization": "TechSecure", 
+        "organization_uuid": "4b839195-3d3a-4983-abc0-9731ea731cab",
+        "service_provider": "TechSecure Corp", 
+        "service_provider_uuid": "c2238202-ce42-4235-814f-91d2e6e0122a", 
+        "building": "Main building",
+        "building_uuid": "8e004910-c5e7-4ca0-b9df-156b1f6ad0a6"
+    }
+
 # Función para generar eventos sintéticos relacionados con redes
 def generate_event():
     lan_device = random.choice(assets.lan_devices_2)
@@ -62,17 +78,6 @@ def generate_event():
         "client_mac_vendor": "Cisco Systems",
         "index_partitions": 5, 
         "index_replicas": 1, 
-        "sensor_ip": sensor.ip, 
-        "sensor_name": sensor.name, 
-        "sensor_uuid": sensor.uuid,
-        "namespace": "Namespace Level Alfa", 
-        "namespace_uuid": "352369f8-60fb-4b72-a603-d1d8393cca0a",
-        "organization": "TechSecure", 
-        "organization_uuid": "4b839195-3d3a-4983-abc0-9731ea731cab",
-        "service_provider": "TechSecure Corp", 
-        "service_provider_uuid": "c2238202-ce42-4235-814f-91d2e6e0122a", 
-        "building": "Main building",
-        "building_uuid": "8e004910-c5e7-4ca0-b9df-156b1f6ad0a6",
         "direction": direction, 
         "lan_ip": lan_device.ip, 
         "wan_ip": wan_device.ip,
@@ -82,8 +87,10 @@ def generate_event():
         "wan_l4_port": assets.random_port(),
         "bytes": bytes,
         "pkts": pkt,        
-        "timestamp": timestamp
+        "timestamp": timestamp,
+        **get_sensor_info()
     }
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--duration', type=int, default=-1, help='Time during the producer is working in seconds (default: -1 = infinite)')
