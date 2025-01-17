@@ -59,7 +59,7 @@ def generate_event():
     "wan_ip": wan_device.ip,
     "public_ip": wan_device.ip, 
     "client_mac_vendor": "Cisco Systems",
-    "client_mac": "00:1A:2B:" + fake.mac_address()[9:],
+    "client_mac": "00:1A:6B:" + fake.mac_address()[9:],
     "lan_l4_port": assets.random_port(),
     "wan_l4_port": assets.random_port(),
     "bytes": bytes_count,
