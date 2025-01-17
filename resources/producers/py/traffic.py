@@ -10,6 +10,7 @@ import assets
 from weight import day_weights, hour_weights
 import argparse
 from producer import run_producer
+from sensors import get_random_sensor
 
 # Define sig_ids list
 sig_ids = [1, 2, 3, 4, 5]  # Add appropriate signature IDs
@@ -17,22 +18,6 @@ sig_ids = [1, 2, 3, 4, 5]  # Add appropriate signature IDs
 # Configura el productor de Kafka
 
 fake = Faker()
-
-def get_sensor_info():
-    sensor = random.choice(assets.mirror_devices)
-    return {
-        "sensor_ip": sensor.ip, 
-        "sensor_name": sensor.name, 
-        "sensor_uuid": sensor.uuid,
-        "namespace": "Namespace Level Alfa", 
-        "namespace_uuid": "352369f8-60fb-4b72-a603-d1d8393cca0a",
-        "organization": "TechSecure", 
-        "organization_uuid": "4b839195-3d3a-4983-abc0-9731ea731cab",
-        "service_provider": "TechSecure Corp", 
-        "service_provider_uuid": "c2238202-ce42-4235-814f-91d2e6e0122a", 
-        "building": "Main building",
-        "building_uuid": "8e004910-c5e7-4ca0-b9df-156b1f6ad0a6"
-    }
 
 # Función para generar eventos sintéticos relacionados con redes
 def generate_event():
@@ -88,7 +73,7 @@ def generate_event():
         "bytes": bytes,
         "pkts": pkt,        
         "timestamp": timestamp,
-        **get_sensor_info()
+        **get_random_sensor('flow')
     }
 
 if __name__ == "__main__":
