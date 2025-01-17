@@ -1,5 +1,4 @@
 #This is a config file where we define on each type of sensors we can produce
-from device import Device
 from random import choice
 
 """
