@@ -2,15 +2,10 @@ from kafka import KafkaProducer
 import json
 import time
 import random
-# from traffic import generate_event
-
-# # Define sig_ids list
-# sig_ids = [1, 2, 3, 4, 5]  # Add appropriate signature IDs
 
 # Configura el productor de Kafka
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
                         value_serializer=lambda v: json.dumps(v).encode('utf-8'))
-
 
 """
 Run a Kafka producer that sends data to a specified topic.
