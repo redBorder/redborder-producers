@@ -10,7 +10,7 @@ This is an auxiliar package for redborder-manager, si is expecte to be installed
 
 # Setup
 The configuration files tweak the properties of the producers, but there are some that really need to be changed:
-* /etc/redborder/producers/sensors.py => Configure this by reading the sensor properties on the manager and pass them to this file.
+* /usr/lib/redborder/producers/py/sensors.py => Configure this by reading the sensor properties on the manager and pass them to this file.
 
 # Main command
 rb_start_synthetic_producers.sh: Starts the producers in pararell by using screen instances, one for each data source. The command is not part of this repo, but it is the main command to start the producers. It is particullar for live and not tested. Needs to be generalized.
