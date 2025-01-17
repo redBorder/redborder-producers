@@ -7,7 +7,7 @@ import random
 from random import shuffle
 from assets import lan_devices, random_wan, wan_devices
 import assets
-from weights import day_weights, hour_weights
+from weight import day_weights, hour_weights
 import argparse
 from producer import run_producer
 
