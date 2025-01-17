@@ -1,7 +1,9 @@
 from kafka import KafkaProducer
+from datetime import datetime, timedelta
 import json
 import time
 import random
+import os
 
 # Configura el productor de Kafka
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
@@ -28,3 +30,41 @@ def run_producer(callback, duration, topic='rb_flow', time_range=(0.000001, 0.01
     pass
   finally:
     producer.close()
+
+TEST_TIME=10
+TIME_TO_NEXT_ATTACK=600
+def check_and_kill_process(script, command):
+  os.system(f'pkill -f "{command}"')
+  time.sleep(5)
+  check_process = os.popen(f'pgrep -f "{command}"').read()
+  while check_process:
+    os.system('figlet "WARNING: Process still running"')
+    print(f"Warning: Process for {script} is still running")
+    os.system(f'pkill -f "{command}"')
+    time.sleep(5)
+    check_process = os.popen(f'pgrep -f "{command}"').read()
+
+"""
+Run one by one each script in SCRIPTS_PATH equally time spaced.
+"""
+def period_producer(SCRIPTS_PATH, looptime, fast=False):
+  while True:
+    for script in SCRIPTS_PATH:
+      print('Starting attack script')
+      script_name = os.path.basename(script)
+      os.system(f'figlet "{script_name}"')   
+      if not os.path.exists(script):
+        print(f"ERROR: Script {script} not found")
+        continue
+        
+      is_yml = script.endswith('.yml')
+      command = f'rb_synthetic_producer -r 1 -p 1 -c {script}' if is_yml else f'python3 {script}'
+      os.system(f'{command}{"&" if is_yml else ""}')
+      time.sleep(10 if is_yml else 5)
+      check_and_kill_process(script, command)
+      
+    sleep_time = TEST_TIME if fast else TIME_TO_NEXT_ATTACK
+    time.sleep(sleep_time)        
+    next_run = datetime.now() + timedelta(hours=looptime/3600)
+    os.system(f'figlet "Repeating scenario at {next_run.strftime("%H:%M")} UTC"')
+    time.sleep(looptime)
