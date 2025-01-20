@@ -5,7 +5,7 @@ This is a collection of scripts to produce synthetic data for demos. This repo b
 
 # Requirements
 
-This is an auxiliar package for redborder-manager, si is expecte to be installed
+This is an auxiliar package for redborder-manager, which is expected to be installed
 * redborder-manager
 
 # Setup
