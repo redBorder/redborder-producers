@@ -1,0 +1,2 @@
+# Problems not solved or planned:
+How we get sensors data as UUIDs, IPs, assets, etc. For now we can just getting hardcoded from live, and later making a setup script to manually fill or, hardcode in python scripts or getting automatically from knife node information.
