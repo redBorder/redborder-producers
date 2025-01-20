@@ -59,7 +59,7 @@ IPS_SENSORS=[
 #   vendor="Cisco Systems, Inc",
 #   os="Cisco Unified Communications Manager VoIP adapter",
 
-def get_random_sensor(type='flow'):
+def get_random_sensor(type):
   valid_types = ['flow', 'ips']
   sensors = []
   if type == 'flow':
