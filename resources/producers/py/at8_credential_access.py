@@ -10,12 +10,6 @@ from producer import run_producer
 # Inicializa Faker para datos sintéticos
 fake = Faker()
 
-address = [
-    "162.125.248.18"
-]
-
-lan = [ "192.168.3.12" ]
-
 # Definición de las firmas para el sig_id y sus revisiones (rev)
 sig_ids = [
   (2029329, 1, 'ET WEB_CLIENT Possible Embedded NTLM Hash Theft Code', 'high'),
