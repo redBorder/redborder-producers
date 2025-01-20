@@ -29,7 +29,7 @@ def generate_event():
   sig_id_data = random.choice(sig_ids)
   user_asset = random.choice(user_devices)
   dst_port = random.choice([80, 443, 53, 25, 587, 465, 143, 993, 110, 995])
-  src = random.choice(random_malicious_ip)
+  src = random_malicious_ip()
   dst = user_asset[0]
   return {
     "timestamp": int(time.time()),
