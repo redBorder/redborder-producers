@@ -42,7 +42,7 @@ def generate_event():
     "dst": lan_asset[0],
     "ethsrc": fake.mac_address(),
     "ethdst": lan_asset[1],
-    "ethsrc_vendor": random,
+    "ethsrc_vendor": "Cisco Systems, Inc",
     "ethdst_vendor": lan_asset[2],
     "sensor_id_snort": 0,
     "action": "alert",
