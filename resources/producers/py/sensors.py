@@ -62,9 +62,9 @@ IPS_SENSORS=[
 VAULT_SENSORS=[
   {
     "sensor_type": "vault",
-    "sensor_ip": "10.1.209.254",
+    "sensor_ip": "10.0.50.40",
     "sensor_uuid": "d08a7b60-3b24-4bee-8a6b-fffb91e50791",
-    "sensor_name": "jenkins-ng",
+    "sensor_name": "wcl-vault",
   }
 ]
 

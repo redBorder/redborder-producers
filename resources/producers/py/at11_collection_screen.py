@@ -23,8 +23,7 @@ def generate_event():
   timestamp=time.time()
   date = datetime.fromtimestamp(timestamp).date()
   hostname = user_device.name
-  raw = f"{date} {hostname} Microsoft-Windows-Security-Auditing 4624 - An image was captured and saved: C:\Users\username\Pictures\Powned.png"
-
+  raw = str(date) + ' ' + hostname + ' Microsoft-Windows-Security-Auditing 4624 - An image was captured and saved: C:\\Users\\username\\Pictures\\Powned.png'
   return {
     "app_name": 'Snipping Tool',
     "timestamp": int(timestamp),
@@ -32,7 +31,7 @@ def generate_event():
     "fromhost_ip": user_device.ip,
     "raw_message": raw,
     "severity_text": sig_id_data[3],
-    "message": sig_id_data[2]
+    "message": sig_id_data[2],
     **get_random_sensor('vault')
   }
 
