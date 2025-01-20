@@ -60,11 +60,12 @@ IPS_SENSORS=[
 #   os="Cisco Unified Communications Manager VoIP adapter",
 
 def get_random_sensor(type='flow'):
+  valid_types = ['flow', 'ips']
   sensors = []
   if type == 'flow':
     sensors = FLOW_SENSORS
   if type == 'ips':
     sensors = IPS_SENSORS
   else:
-    raise ValueError(f"Not recognized sensor type: {type}")
+    raise ValueError(f"Not recognized sensor type: {type}. Valid types are: {valid_types}")
   return choice(sensors)
