@@ -43,10 +43,7 @@ mkdir -p %{buildroot}/usr/lib/redborder/producers/json
 mkdir -p %{buildroot}/usr/share/%{name}
 
 install -m 755 resources/bin/rb_synthetic_producers.sh %{buildroot}/usr/lib/redborder/bin/
-install -m 755 resources/producers/py/at10_collection_screen.py %{buildroot}/usr/lib/redborder/producers/py/
-install -m 755 resources/producers/py/at11_exfiltration_dropbox.py %{buildroot}/usr/lib/redborder/producers/py/
-install -m 755 resources/producers/py/at12_cnc.py %{buildroot}/usr/lib/redborder/producers/py/
-install -m 755 resources/producers/py/at13_impact_ransom.py %{buildroot}/usr/lib/redborder/producers/py/
+
 install -m 755 resources/producers/py/at1_reconocimiento_scan.py %{buildroot}/usr/lib/redborder/producers/py/
 install -m 755 resources/producers/py/at2_resource_development_ssl.py %{buildroot}/usr/lib/redborder/producers/py/
 install -m 755 resources/producers/py/at3.py %{buildroot}/usr/lib/redborder/producers/py/
@@ -55,7 +52,11 @@ install -m 755 resources/producers/py/at6.py %{buildroot}/usr/lib/redborder/prod
 install -m 755 resources/producers/py/at7_defense_evasion.py %{buildroot}/usr/lib/redborder/producers/py/
 install -m 755 resources/producers/py/at8_credential_access.py %{buildroot}/usr/lib/redborder/producers/py/
 install -m 755 resources/producers/py/at9_discovery.py %{buildroot}/usr/lib/redborder/producers/py/
-install -m 755 resources/producers/py/at9_lateral_movement.py %{buildroot}/usr/lib/redborder/producers/py/
+install -m 755 resources/producers/py/at10_lateral_movement.py %{buildroot}/usr/lib/redborder/producers/py/
+install -m 755 resources/producers/py/at11_collection_screen.py %{buildroot}/usr/lib/redborder/producers/py/
+install -m 755 resources/producers/py/at12_cnc.py %{buildroot}/usr/lib/redborder/producers/py/
+install -m 755 resources/producers/py/at13_exfiltration_dropbox.py %{buildroot}/usr/lib/redborder/producers/py/
+install -m 755 resources/producers/py/at14_impact_ransom.py %{buildroot}/usr/lib/redborder/producers/py/
 install -m 755 resources/producers/py/mitre_wide_attack.py %{buildroot}/usr/lib/redborder/producers/py/
 install -m 755 resources/producers/py/monitor_copy.py %{buildroot}/usr/lib/redborder/producers/py/
 install -m 755 resources/producers/py/monitor.py %{buildroot}/usr/lib/redborder/producers/py/
