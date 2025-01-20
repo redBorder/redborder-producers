@@ -3,7 +3,7 @@ import argparse
 from faker import Faker
 import time
 import random
-from assets import lan_devices, random_port
+from assets import lan_devices, random_port, random_mac, user_devices_2
 from sensors import get_random_sensor
 from producer import run_producer
 import json
@@ -11,8 +11,6 @@ import json
 # Inicializa Faker para datos sintéticos
 fake = Faker()
 
-# Campos a modificar
-priority_level = ['high', 'medium', 'low']
 address = [
     "192.0.2.1",
     "203.0.113.5",
@@ -49,6 +47,7 @@ sig_ids = [
 def generate_event():
   sig_id_data = random.choice(sig_ids)
   src = "74.125.250.244"
+  lan_device = random.choice(user_devices_2)
   return {
     "timestamp": int(time.time()),
     "sensor_id_snort": 0,
@@ -62,9 +61,9 @@ def generate_event():
     "l4_proto_name": "udp",
     "l4_proto": 17,
     "ethsrc": "ec:ce:13:ae:32:a3",
-    "ethdst": "50:eb:f6:8e:cf:30",
+    "ethdst": lan_device.mac,
     "ethsrc_vendor": "Cisco Systems, Inc",
-    "ethdst_vendor": "ASUSTek COMPUTER INC.",
+    "ethdst_vendor": lan_device.vendor,
     "ethtype": 33024,
     "vlan": 30,
     "vlan_name": "30",
@@ -81,8 +80,8 @@ def generate_event():
     "src": src,
     "src_name": str(src),
     "dst_asnum": "3038642698",
-    "dst_name": "10.2.30.181",
-    "dst": "10.2.30.181",
+    "dst_name": lan_device.name,
+    "dst": lan_device.ip,
     "ttl": 47,
     "tos": 0,
     "id": 0,
