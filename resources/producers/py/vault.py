@@ -19,7 +19,7 @@ producer = KafkaProducer(
 fake = Faker()
 
 # Funciones para generar datos
-def generate_msg_names():
+def get_random_message():
     msg_names = [
         'ET SCAN Nmap TCP Connect Scan Detected',
         'ET SCAN Potential SYN Scan Detected',
@@ -45,7 +45,7 @@ def generate_msg_names():
     ]
     return random.choice(msg_names)
 
-def generate_app_name():
+def get_random_app():
     app_names = [
         "brave-browser.desktop",
         "chrome.desktop",
@@ -109,7 +109,7 @@ def generate_intrusion(data):
     intrusion_data = random.choice(data['intrusions'])  # Selecciona una intrusión aleatoria
     intrusion_data.update({
         "timestamp": int(time.time()),
-        "msg": generate_msg_names(),
+        "msg": get_random_message(),
         "sig_id": random.choice([2001583, 2001581, 2001569, 2001579]),
         "priority": random.choice(['low', 'medium', 'high']),
         "src": generate_ip(),
@@ -141,7 +141,7 @@ def generate_flow(data):
 def generate_vault(data):
     vault_data = random.choice(data['vaults'])  # Selecciona un vault aleatorio
     hostname = generate_hostname()
-    app_name = generate_app_name()
+    app_name = get_random_app()
     procid = random.randint(1000, 9999)
 
     raw_message, message = generate_raw_message(hostname, app_name, procid)
