@@ -8,6 +8,10 @@ This is a collection of scripts to produce synthetic data for demos. This repo b
 This is an auxiliar package for redborder-manager, which is expected to be installed
 * redborder-manager
 
+Additionally each required module is expected to be enabled. 
+
+Particularly with intrusion, which needs to be patched on the logstash condition if ips sensor is not claimed. So open this file: /var/chef/cookbooks/rb-manager/libraries/get_pipelines.rb, comment the condition in order to always make intrusion pipeline available, and update the cookbook with knife cookbook upload rb-manager
+
 # Setup
 The configuration files tweak the properties of the producers, but there are some that really need to be changed:
 * /usr/lib/redborder/producers/py/sensors.py => Configure this by reading the sensor properties on the manager and pass them to this file.
