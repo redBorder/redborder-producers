@@ -1,15 +1,9 @@
 #!/usr/bin/python3
-from kafka import KafkaProducer
-import json
 import time
 import random
-from assets import random_lan, lan_devices, random_malicious_ip, random_port, random_mac
+from assets import random_lan, random_malicious_ip, random_port, random_mac
 from sensors import get_random_sensor
 from producer import run_producer
-
-# Configura el productor de Kafka
-producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
-                         value_serializer=lambda v: json.dumps(v).encode('utf-8'))
 
 # Active Scanning T1595
 def generate_active_scanning_event():
@@ -66,7 +60,7 @@ def generate_active_scanning_event():
         "campus_uuid": "N/A",
         "building": "Main building",
         "building_uuid": "8e004910-c5e7-4ca0-b9df-156b1f6ad0a6",
-        **get_random_sensor('ips')
+        **get_random_sensor('ips') # Merge sensor data
         }
 
 # Produce mensajes continuamente simulando eventos de escaneo activo
