@@ -59,13 +59,24 @@ IPS_SENSORS=[
 #   vendor="Cisco Systems, Inc",
 #   os="Cisco Unified Communications Manager VoIP adapter",
 
+VAULT_SENSORS=[
+  {
+    "sensor_type": "vault",
+    "sensor_ip": "10.1.209.254",
+    "sensor_uuid": "d08a7b60-3b24-4bee-8a6b-fffb91e50791",
+    "sensor_name": "jenkins-ng",
+  }
+]
+
 def get_random_sensor(type):
-  valid_types = ['flow', 'ips']
+  valid_types = ['flow', 'ips', 'vault']
   sensors = []
   if type == 'flow':
     sensors = FLOW_SENSORS
-  if type == 'ips':
+  elif type == 'ips':
     sensors = IPS_SENSORS
+  elif type == 'vault':
+    sensors = VAULT_SENSORS
   else:
     raise ValueError(f"Not recognized sensor type: {type}. Valid types are: {valid_types}")
   return choice(sensors)
