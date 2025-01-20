@@ -1,17 +1,14 @@
 #!/usr/bin/python3
-from kafka import KafkaProducer
 from faker import Faker
 import time
 import random
-from assets import random_lan, lan_devices, random_malicious_ip, random_port, random_mac, user_devices, random_vendor
+from assets import random_malicious_ip, user_devices, random_vendor
 import argparse
 from sensors import get_random_sensor
 from producer import run_producer
 
 # Inicializa Faker para datos sintéticos
 fake = Faker()
-
-# Campos a modificar
 
 address = [
   "192.0.2.1",
@@ -79,7 +76,7 @@ def generate_event():
     "src_asnum": 4110056778,
     "src": src,
     "src_name": src,
-    "dst_asnum": "3038642698",
+    "dst_asnum": 3038642698,
     "dst_name": dst,
     "dst": dst,
     "ttl": 47,
