@@ -68,7 +68,6 @@ def generate_event():
   }
 
 if __name__ == "__main__":
-  import argparse
   parser = argparse.ArgumentParser()
   parser.add_argument('-d', '--duration', type=int, default=5, help='Duration in seconds (default: 5)')
   args = parser.parse_args()
