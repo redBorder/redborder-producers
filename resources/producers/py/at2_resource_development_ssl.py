@@ -49,9 +49,9 @@ def generate_event():
     "sig_generator": 1,
     "sig_id": sig_id_data[0],  # ID del evento
     "rev": sig_id_data[1],  # Revisión asociada al evento
+    "msg": sig_id_data[2],  # Descripción del mensaje
     "priority": sig_id_data[3],
     "classification": "Command and Control",
-    "msg": sig_id_data[2],  # Descripción del mensaje
     "l4_proto_name": "udp",
     "l4_proto": 17,
     "ethtype": 33024,
