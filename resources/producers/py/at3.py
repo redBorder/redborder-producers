@@ -53,8 +53,8 @@ def generate_event():
     "sig_id": sig_id_data[0],  # ID del evento
     "rev": sig_id_data[1],  # Revisión asociada al evento
     "priority": sig_id_data[3],
-    "classification": "Phising",
     "msg": sig_id_data[2],  # Descripción del mensaje
+    "classification": "Phising",
     "l4_proto_name": "udp",
     "l4_proto": 17,
     "ethsrc": fake.mac_address(),
