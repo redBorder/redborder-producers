@@ -58,7 +58,6 @@ install -m 755 resources/producers/py/at12_cnc.py %{buildroot}/usr/lib/redborder
 install -m 755 resources/producers/py/at13_exfiltration_dropbox.py %{buildroot}/usr/lib/redborder/producers/py/
 install -m 755 resources/producers/py/at14_impact_ransom.py %{buildroot}/usr/lib/redborder/producers/py/
 install -m 755 resources/producers/py/mitre_wide_attack.py %{buildroot}/usr/lib/redborder/producers/py/
-install -m 755 resources/producers/py/monitor_copy.py %{buildroot}/usr/lib/redborder/producers/py/
 install -m 755 resources/producers/py/monitor.py %{buildroot}/usr/lib/redborder/producers/py/
 install -m 755 resources/producers/py/producer_traffic.py %{buildroot}/usr/lib/redborder/producers/py/
 install -m 755 resources/producers/py/scanner_producer.py %{buildroot}/usr/lib/redborder/producers/py/
@@ -96,7 +95,6 @@ install -m 644 requirements.txt %{buildroot}/usr/lib/redborder/producers/
 /usr/lib/redborder/producers/py/at13_exfiltration_dropbox.py
 /usr/lib/redborder/producers/py/at14_impact_ransom.py
 /usr/lib/redborder/producers/py/mitre_wide_attack.py
-/usr/lib/redborder/producers/py/monitor_copy.py
 /usr/lib/redborder/producers/py/monitor.py
 /usr/lib/redborder/producers/py/producer_traffic.py
 /usr/lib/redborder/producers/py/scanner_producer.py
