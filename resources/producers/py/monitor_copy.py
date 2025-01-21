@@ -99,4 +99,3 @@ if __name__ == "__main__":
     parser.add_argument('-d', '--duration', type=int, default=5, help='Duration in seconds (default: 5), -1 for infinite')
     args = parser.parse_args()
     run_producer(args.duration)
-~                                          
