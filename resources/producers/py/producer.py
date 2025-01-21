@@ -33,7 +33,6 @@ def run_producer(callback, duration, topic='rb_flow', time_range=(0.000001, 0.01
     producer.close()
 
 TEST_TIME=10
-TIME_TO_NEXT_ATTACK=600
 def check_and_kill_process(script, command):
   os.system(f'pkill -f "{command}"')
   time.sleep(5)
@@ -48,7 +47,7 @@ def check_and_kill_process(script, command):
 """
 Run one by one each script in SCRIPTS_PATH equally time spaced.
 """
-def period_producer(SCRIPTS_PATH, looptime, fast=False):
+def period_producer(SCRIPTS_PATH, looptime=3600, fast=False):
   while True:
     for script in SCRIPTS_PATH:
       print('Starting attack script')
@@ -63,9 +62,9 @@ def period_producer(SCRIPTS_PATH, looptime, fast=False):
       os.system(f'{command}{"&" if is_yml else ""}')
       time.sleep(10 if is_yml else 5)
       check_and_kill_process(script, command)
-      
-    sleep_time = TEST_TIME if fast else TIME_TO_NEXT_ATTACK
-    time.sleep(sleep_time)        
+      sleep_time = TEST_TIME if fast else looptime/SCRIPTS_PATH.__len__()+1 # equally separated
+      time.sleep(sleep_time)        
+
     next_run = datetime.now() + timedelta(hours=looptime/3600)
     os.system(f'figlet "Repeating scenario at {next_run.strftime("%H:%M")} UTC"')
     time.sleep(looptime)
