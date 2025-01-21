@@ -30,7 +30,7 @@ def generate_event():
     "hostname": user_device.name,
     "fromhost_ip": user_device.ip,
     "raw_message": raw,
-    "severity_text": sig_id_data[3],
+    "syslogseverity_text": sig_id_data[3],
     "message": sig_id_data[2],
     **get_random_sensor('vault')
   }
