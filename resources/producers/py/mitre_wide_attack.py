@@ -29,7 +29,8 @@ SCRIPTS_PATH = [
   '/usr/lib/redborder/producers/py/at11_collection_screen.py',
   '/usr/lib/redborder/producers/py/at12_cnc.py',
   '/usr/lib/redborder/producers/py/at13_exfiltration_dropbox.py',
-  '/usr/lib/redborder/producers/py/at14_impact_ransom.py']
+  '/usr/lib/redborder/producers/py/at14_impact_ransom.py'
+]
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(description=__doc__)
   parser.add_argument('-f', '--fast', action='store_true', default=False, help='Run with no wait between incidents')
