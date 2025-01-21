@@ -68,6 +68,15 @@ VAULT_SENSORS=[
   }
 ]
 
+MONITOR_SENSORS=[
+  {
+    "sensor_type": "monitor",
+    "sensor_name": "jenkins-ng",
+    "sensor_ip": "10.1.209.254",
+    "sensor_uuid": "2f841ca5-69b1-4c0e-874c-b0313328c7e4",
+  }
+]
+
 def get_random_sensor(type):
   valid_types = ['flow', 'ips', 'vault']
   sensors = []
