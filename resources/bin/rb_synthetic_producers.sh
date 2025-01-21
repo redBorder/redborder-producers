@@ -23,6 +23,11 @@ usage() {
     echo "  - mitre_wide_attack"
     echo "  - monitor_routers"
     echo "  - vault"
+    echo
+    echo "Example:"
+    echo "  $0 start                     # Start all producers"
+    echo "  $0 -s mitre_wide_attack start  # Start specific producer"
+    
 }
 
 while getopts "hfs:" opt; do
@@ -53,10 +58,9 @@ if [ -z "$ACTION" ] || [[ ! "$ACTION" =~ ^(start|restart|stop)$ ]]; then
 fi
 # /usr/lib/redborder/bin/rb_synthetic_producer.rb
 
-VALID_SCREEN_NAMES=("traffic_namespace" "traffic_with_sense" "mitre_wide_attack" "monitor_routers" "vault")
+VALID_SCREEN_NAMES=("traffic_namespace" "traffic_with_sense" "mitre_wide_attack" "monitor" "vault")
 if [ -z "${SCREEN_NAME}" ]; then
-  SCREEN_NAMES=("mitre_wide_attack" "vault")
-  SCREEN_NAMES=("traffic_namespace" "traffic_with_sense" "mitre_wide_attack" "monitor_routers" "vault")
+  SCREEN_NAMES=("traffic_namespace" "traffic_with_sense" "mitre_wide_attack" "monitor" "vault")
 else
   SCREEN_NAMES=("${SCREEN_NAME}")
   if [[ ! " ${VALID_SCREEN_NAMES[@]} " =~ " ${SCREEN_NAME} " ]]; then
@@ -70,8 +74,9 @@ for SCREEN_NAME in "${SCREEN_NAMES[@]}"; do
   echo "Restarting screen instance ${SCREEN_NAME}"  
   screen -X -S ${SCREEN_NAME} quit 2>/dev/null || true # Kill screen instance if exists
   if [ "$ACTION" != "stop" ]; then
-    screen -dmS ${SCREEN_NAME} python3 /usr/lib/redborder/producers/${SCREEN_NAME}.py #${FAST_MODE:+--fast}
+    screen -dmS ${SCREEN_NAME} python3 /usr/lib/redborder/producers/py/${SCREEN_NAME}.py #${FAST_MODE:+--fast}
   fi
 done
 
 echo "Screen instance ${SCREEN_NAME} created. Watch it running screen -r ${SCREEN_NAME}"
+screen -ls
