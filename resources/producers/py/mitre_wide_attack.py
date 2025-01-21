@@ -35,6 +35,5 @@ if __name__ == "__main__":
   parser = argparse.ArgumentParser(description=__doc__)
   parser.add_argument('-f', '--fast', action='store_true', default=False, help='Run with no wait between incidents')
   parser.add_argument('-l', '--looptime', default=3600, help='Time in seconds to start again the tactics happening')
-
   args = parser.parse_args()    
   period_producer(SCRIPTS_PATH, args.looptime, args.fast)

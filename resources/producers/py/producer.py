@@ -53,9 +53,9 @@ def period_producer(SCRIPTS_PATH, looptime=3600, fast=False):
       print('Starting attack script')
       script_name = os.path.basename(script)
       os.system(f'figlet "{script_name}"')   
-      if not os.path.exists(script):
-        print(f"ERROR: Script {script} not found")
-        continue
+      # if not os.path.exists(script):
+      #   print(f"ERROR: Script {script} not found")
+      #   continue
         
       is_yml = script.endswith('.yml')
       command = f'rb_synthetic_producer -r 1 -p 1 -c {script}' if is_yml else f'python3 {script}'
