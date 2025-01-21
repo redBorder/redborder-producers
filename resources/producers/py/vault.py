@@ -1,17 +1,12 @@
 #!/usr/bin/python3
-from kafka import KafkaProducer
+import argparse
 from faker import Faker
 import json
 import time
 import random
 import string
 from datetime import datetime
-
-# Configura el productor de Kafka
-producer = KafkaProducer(
-    bootstrap_servers=['localhost:9092'],
-    value_serializer=lambda v: json.dumps(v).encode('utf-8')
-)
+from producers import run_producer
 
 # Inicializa Faker para datos sintéticos
 fake = Faker()
@@ -67,12 +62,6 @@ def load_json_data(file_path):
 def generate_ip():
     return fake.ipv4_private()  # Genera IPs privadas (puedes cambiar a ipv4_public si necesitas IPs públicas)
 
-def generate_mac():
-    return fake.mac_address()
-
-def generate_port():
-    return random.randint(1024, 65535)
-
 def generate_hostname():
     prefix = random.choice(['host', 'server', 'node', 'machine', 'localhost'])
     suffix = ''.join(random.choices(string.ascii_lowercase + string.digits, k=4))
@@ -101,40 +90,6 @@ def generate_raw_message(hostname, app_name, procid):
 
     return raw_message, message
 
-# Funciones para generar eventos de red desde diferentes archivos JSON
-# Función para generar eventos de intrusión
-def generate_intrusion(data):
-    intrusion_data = random.choice(data['intrusions'])  # Selecciona una intrusión aleatoria
-    intrusion_data.update({
-        "timestamp": int(time.time()),
-        "msg": get_random_message(),
-        "sig_id": random.choice([2001583, 2001581, 2001569, 2001579]),
-        "priority": random.choice(['low', 'medium', 'high']),
-        "src": generate_ip(),
-        "dst": generate_ip(),
-        "src_port": generate_port(),
-        "dst_port": generate_port()
-    })
-    return intrusion_data
-
-# Función para generar eventos de flujo (netflow)
-def generate_flow(data):
-    flow_data = random.choice(data['flows'])  # Selecciona un flujo aleatorio
-    flow_data.update({
-        "timestamp": int(time.time()),
-        "flow_id": random.randint(1000, 9999),
-        "type": random.choice(["netflowv10", "netflowv9"]),
-        "direction": random.choice(["downstream", "upstream"]),
-        "lan_ip": generate_ip(),
-        "wan_ip": generate_ip(),
-        "client_mac": generate_mac(),
-        "lan_l4_port": generate_port(),
-        "wan_l4_port": generate_port(),
-        "bytes": random.randint(500, 10000),
-        "pkts": random.randint(1, 100)
-    })
-    return flow_data
-
 # Función para generar eventos de vault
 def generate_vault(data):
     vault_data = random.choice(data['vaults'])  # Selecciona un vault aleatorio
@@ -155,25 +110,8 @@ def generate_vault(data):
     })
     return vault_data
 
-# Función para intercalar la generación de eventos y enviar a diferentes topics
-def send_interleaved_events():
-    data = load_json_data('data.json')  # Cargar el archivo unificado
-    event_generators = [
-        (generate_vault, 'rb_vault')
-    ]
-
-    try:
-        while True:
-            event_func, topic = random.choice(event_generators)
-            event_data = event_func(data)
-            if event_data:
-                producer.send(topic, value=event_data)
-                print(f'Data sent to {topic}: {event_data}')
-            time.sleep(random.uniform(5, 60))  # Simular picos de tráfico
-    except KeyboardInterrupt:
-        pass
-    finally:
-        producer.close()
-
-# Llama a la función para comenzar a enviar los eventos
-send_interleaved_events()
+if __name__ == "__main__":
+  parser = argparse.ArgumentParser()
+  parser.add_argument('-d', '--duration', type=int, default=-1, help='Duration in seconds (default: 5)')
+  args = parser.parse_args()
+  run_producer(generate_vault, args.duration, topic='rb_event', time_range=(5, 60))
