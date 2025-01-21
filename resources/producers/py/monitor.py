@@ -23,7 +23,7 @@ def generate_event(monitor):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--duration', type=int, default=-1, help='Duration in seconds (default: 5), -1 for infinite')
-    parser.add_argument('-l', '--looptime', type=int, default=300, help='Loop time in seconds (default: 300)') # 5 minutes
+    parser.add_argument('-l', '--looptime', type=int, default=60, help='Loop time in seconds (default: 300)') # 5 minutes
     args = parser.parse_args()
     for monitor in MonitorEvent.generate_all_monitors():
-      run_producer(generate_event(monitor), args.duration, topic='rb_monitor', time_range=(300, 300)) 
+      run_producer(callback=generate_event(monitor), duration=args.duration, topic='rb_monitor', time_range=(args.looptime, args.looptime)) 

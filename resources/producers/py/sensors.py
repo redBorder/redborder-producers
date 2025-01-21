@@ -78,13 +78,15 @@ MONITOR_SENSORS=[
 ]
 
 def get_random_sensor(type):
-  valid_types = ['flow', 'ips', 'vault']
+  valid_types = ['flow', 'ips', 'vault', 'monitor']
   sensors = []
   if type == 'flow':
     sensors = FLOW_SENSORS
   elif type == 'ips':
     sensors = IPS_SENSORS
   elif type == 'vault':
+    sensors = VAULT_SENSORS
+  elif type == 'monitor':
     sensors = VAULT_SENSORS
   else:
     raise ValueError(f"Not recognized sensor type: {type}. Valid types are: {valid_types}")
