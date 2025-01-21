@@ -7,6 +7,7 @@ import random
 import string
 from datetime import datetime
 from producers import run_producer
+from assets import lan_devices_2
 
 # Inicializa Faker para datos sintéticos
 fake = Faker()
@@ -58,10 +59,6 @@ def load_json_data(file_path):
   with open(file_path, 'r') as file:
     return json.load(file)
 
-# Función para generar direcciones IP realistas
-def generate_ip():
-  return fake.ipv4_private()  # Genera IPs privadas (puedes cambiar a ipv4_public si necesitas IPs públicas)
-
 def generate_hostname():
   prefix = random.choice(['host', 'server', 'node', 'machine', 'localhost'])
   suffix = ''.join(random.choices(string.ascii_lowercase + string.digits, k=4))
@@ -92,18 +89,18 @@ def generate_raw_message(hostname, app_name, procid):
 
 # Función para generar eventos de vault
 def generate_vault():
-  data = load_json_data('data.json')
+  data = load_json_data('vault.json')
   vault_data = random.choice(data['vaults'])  # Selecciona un vault aleatorio
   hostname = generate_hostname()
   app_name = get_random_app()
   procid = random.randint(1000, 9999)
 
   raw_message, message = generate_raw_message(hostname, app_name, procid)
-
+  lan_device = random.choice(lan_devices_2)
   vault_data.update({
     "timestamp": int(time.time()),
     "hostname": hostname,
-    "fromhost_ip": generate_ip(),
+    "fromhost_ip": lan_device.ip,
     "app_name": app_name,
     "raw_message": raw_message,
     "syslogseverity_text": random.choice(['notice', 'info', 'critical', 'emergency']),
