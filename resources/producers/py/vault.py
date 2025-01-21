@@ -1,11 +1,9 @@
 #!/usr/bin/python3
-
 from kafka import KafkaProducer
 from faker import Faker
 import json
 import time
 import random
-import os
 import string
 from datetime import datetime
 
