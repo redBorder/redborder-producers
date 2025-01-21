@@ -71,6 +71,8 @@ install -m 644 resources/producers/py/device.py %{buildroot}/usr/lib/redborder/p
 install -m 644 resources/producers/py/producer.py %{buildroot}/usr/lib/redborder/producers/py/
 install -m 644 resources/producers/py/weight.py %{buildroot}/usr/lib/redborder/producers/py/
 install -m 644 resources/producers/py/sensors.py %{buildroot}/usr/lib/redborder/producers/py/
+install -m 644 resources/producers/py/monitor_event.py %{buildroot}/usr/lib/redborder/producers/py/
+
 
 install -m 644 resources/json/*.json %{buildroot}/usr/lib/redborder/producers/json/
 
@@ -110,6 +112,7 @@ install -m 644 requirements.txt %{buildroot}/usr/lib/redborder/producers/
 /usr/lib/redborder/producers/py/weight.py
 /usr/lib/redborder/producers/py/producer.py
 /usr/lib/redborder/producers/py/sensors.py
+/usr/lib/redborder/producers/py/monitor_event.py
 
 /usr/lib/redborder/producers/requirements.txt
 
