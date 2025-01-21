@@ -91,7 +91,8 @@ def generate_raw_message(hostname, app_name, procid):
   return raw_message, message
 
 # Función para generar eventos de vault
-def generate_vault(data):
+def generate_vault():
+  data = load_json_data('data.json')
   vault_data = random.choice(data['vaults'])  # Selecciona un vault aleatorio
   hostname = generate_hostname()
   app_name = get_random_app()
