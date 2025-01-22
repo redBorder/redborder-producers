@@ -33,7 +33,7 @@ if __name__ == "__main__":
   run_producer(
     callback=generate_event,
     duration=args.duration,
-    topic='rb_flow',
+    topic='rb_scanner_post',
     time_range=(EVENT_FOR_NEXT_EVENT, EVENT_FOR_NEXT_EVENT)
   )
 

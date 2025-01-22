@@ -91,7 +91,7 @@ SCANNER_SENSORS=[
 
 def get_random_sensor(type):
   valid_types = ['flow', 'ips', 'vault', 'monitor', 'scanner']
-  sensors = []
+  # sensors = []
   if type == 'flow':
     sensors = FLOW_SENSORS
   elif type == 'ips':
@@ -104,4 +104,8 @@ def get_random_sensor(type):
     sensors == SCANNER_SENSORS
   else:
     raise ValueError(f"Not recognized sensor type: {type}. Valid types are: {valid_types}")
+
+  if sensors.__len__() == 0:
+    raise ValueError(f"No sensors declared for type {type}")
+
   return choice(sensors)
