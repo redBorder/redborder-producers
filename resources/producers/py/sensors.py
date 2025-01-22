@@ -101,7 +101,7 @@ def get_random_sensor(type):
   elif type == 'monitor':
     sensors = VAULT_SENSORS
   elif type == 'scanner':
-    sensors == SCANNER_SENSORS
+    sensors = SCANNER_SENSORS
   else:
     raise ValueError(f"Not recognized sensor type: {type}. Valid types are: {valid_types}")
 
