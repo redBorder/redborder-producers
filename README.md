@@ -17,7 +17,7 @@ The configuration files tweak the properties of the producers, but there are som
 * /usr/lib/redborder/producers/py/sensors.py => Configure this by reading the sensor properties on the manager and pass them to this file.
 
 # Main command
-rb_start_synthetic_producers.sh: Starts the producers in pararell by using screen instances, one for each data source. The command is not part of this repo, but it is the main command to start the producers. It is particullar for live and not tested. Needs to be generalized.
+rb_producer_simulator.sh: Start one or multiple producers in pararell by using screen instances, one for each data source.
 
 # Building the rpm package
 On Release section, you can find already stable rpms, but if you want to build the rpm from the source code. You can execute the following command on top of the repository path:
