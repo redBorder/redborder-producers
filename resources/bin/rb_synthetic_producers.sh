@@ -18,11 +18,11 @@ usage() {
     echo "  stop             Stop the producer(s)"
     echo
     echo "Available screen names:"
-    echo "  - traffic_namespace"
-    echo "  - traffic_with_sense"
-    echo "  - mitre_wide_attack"
-    echo "  - monitor_routers"
-    echo "  - vault"
+    echo "  - traffic: produce synthetic traffic as multiple fictional exporters were producing it"
+    echo "  - mitre_wide_attack: produce intrusion events like an IDS was detectecting them"
+    echo "  - monitor producer usage statistics about the fictional hardware"
+    echo "  - vault: produce rsyslog logs about fictional devices"
+    echo "  - scanner: produce scanning events like a fictional scanner was detecting vulnerabilities in the network"
     echo
     echo "Example:"
     echo "  $0 start                     # Start all producers"
@@ -58,9 +58,9 @@ if [ -z "$ACTION" ] || [[ ! "$ACTION" =~ ^(start|restart|stop)$ ]]; then
 fi
 # /usr/lib/redborder/bin/rb_synthetic_producer.rb
 
-VALID_SCREEN_NAMES=("traffic" "mitre_wide_attack" "monitor" "vault")
+VALID_SCREEN_NAMES=("traffic" "mitre_wide_attack" "monitor" "vault" 'scanner')
 if [ -z "${SCREEN_NAME}" ]; then
-  SCREEN_NAMES=("traffic" "mitre_wide_attack" "monitor" "vault")
+  SCREEN_NAMES=$VALID_SCREEN_NAMES
 else
   SCREEN_NAMES=("${SCREEN_NAME}")
   if [[ ! " ${VALID_SCREEN_NAMES[@]} " =~ " ${SCREEN_NAME} " ]]; then
