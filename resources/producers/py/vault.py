@@ -6,7 +6,7 @@ import time
 import random
 import string
 from datetime import datetime
-from producers import run_producer
+from producer import run_producer
 from assets import lan_devices_2
 
 # Inicializa Faker para datos sintéticos
