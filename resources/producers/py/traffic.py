@@ -1,10 +1,9 @@
 #!/usr/bin/python3
-from kafka import KafkaProducer
 from faker import Faker
 import time
 import random
 from random import shuffle
-from assets import lan_devices, random_wan, wan_devices
+from assets import wan_devices
 import assets
 from weight import day_weights, hour_weights
 import argparse
@@ -60,6 +59,8 @@ def generate_event():
     "public_ip": wan_device.ip, 
     "client_mac_vendor": "Cisco Systems",
     "client_mac": "00:1A:6B:" + fake.mac_address()[9:],
+    # "client_mac_vendor": src_device.vendor,
+    # "client_mac": src_device.mac,
     "lan_l4_port": assets.random_port(),
     "wan_l4_port": assets.random_port(),
     "bytes": bytes_count,
