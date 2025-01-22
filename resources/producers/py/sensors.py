@@ -77,8 +77,20 @@ MONITOR_SENSORS=[
   }
 ]
 
+# Remember to enable the scanner module which for now is disabled by default
+# rb_set_modules scanner:1
+SCANNER_SENSORS=[
+  {
+    "name": "Scanner",                              # sensor name
+    "uuid": "c2b6c541-37a7-460c-8680-6a2de2b62cc5", # TODO: put uuid of scanner sensor
+    "scan_id": "1",                                 # TODO: put id of scanner sensor
+    "scan_type": "2",                               # On demand scan
+    "sensor_type": "scanner"
+  }
+]
+
 def get_random_sensor(type):
-  valid_types = ['flow', 'ips', 'vault', 'monitor']
+  valid_types = ['flow', 'ips', 'vault', 'monitor', 'scanner']
   sensors = []
   if type == 'flow':
     sensors = FLOW_SENSORS
@@ -88,6 +100,8 @@ def get_random_sensor(type):
     sensors = VAULT_SENSORS
   elif type == 'monitor':
     sensors = VAULT_SENSORS
+  elif type == 'scanner':
+    sensors == SCANNER_SENSORS
   else:
     raise ValueError(f"Not recognized sensor type: {type}. Valid types are: {valid_types}")
   return choice(sensors)
