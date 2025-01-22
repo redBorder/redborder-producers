@@ -8,6 +8,7 @@ import string
 from datetime import datetime
 from producer import run_producer
 from assets import lan_devices_2
+from sensors import get_random_sensor
 
 # Inicializa Faker para datos sintéticos
 fake = Faker()
@@ -89,7 +90,7 @@ def generate_raw_message(hostname, app_name, procid):
 
 # Función para generar eventos de vault
 def generate_vault():
-  data = load_json_data('vault.json')
+  data = load_json_data('/usr/lib/redborder/producers/json/vault.json')
   vault_data = random.choice(data['vaults'])  # Selecciona un vault aleatorio
   hostname = generate_hostname()
   app_name = get_random_app()
@@ -104,7 +105,8 @@ def generate_vault():
     "app_name": app_name,
     "raw_message": raw_message,
     "syslogseverity_text": random.choice(['notice', 'info', 'critical', 'emergency']),
-    "message": message
+    "message": message,
+    **get_random_sensor('vault'),
   })
   return vault_data
 
