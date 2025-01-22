@@ -3,7 +3,6 @@ import argparse
 from faker import Faker
 import time
 import random
-# from assets import lan_devices, random_wan, wan_devices
 import assets
 from vulnerability import Vulnerability
 from producer import run_producer
@@ -29,7 +28,7 @@ def generate_event():
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
-  parser.add_argument('-d', '--duration', type=int, default=5, help='Duration in seconds (default: 5), -1 for infinite')
+  parser.add_argument('-d', '--duration', type=int, default=-1, help='Duration in seconds (default: 5), -1 for infinite')
   args = parser.parse_args()
   run_producer(
     callback=generate_event,
