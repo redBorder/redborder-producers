@@ -58,25 +58,20 @@ if [ -z "$ACTION" ] || [[ ! "$ACTION" =~ ^(start|restart|stop)$ ]]; then
 fi
 # /usr/lib/redborder/bin/rb_synthetic_producer.rb
 
-VALID_SCREEN_NAMES=("traffic" "mitre_wide_attack" "monitor" "vault" 'scanner')
-if [ -z "${SCREEN_NAME}" ]; then
-  SCREEN_NAMES=$VALID_SCREEN_NAMES
+VALID_SCREEN_NAMES=('traffic' 'mitre_wide_attack' 'monitor' 'vault' 'scanner')
+if [ -n "$SCREEN_NAME" ]; then
+  SCREEN_NAMES=("$SCREEN_NAME")
 else
-  SCREEN_NAMES=("${SCREEN_NAME}")
-  if [[ ! " ${VALID_SCREEN_NAMES[@]} " =~ " ${SCREEN_NAME} " ]]; then
-    echo "Error: Invalid screen name '${SCREEN_NAME}'" >&2
-    usage
-    exit 1
-  fi
+  SCREEN_NAMES=("${VALID_SCREEN_NAMES[@]}")
 fi
 
-for SCREEN_NAME in "${SCREEN_NAMES[@]}"; do
+for SCREEN_NAME in "${VALID_SCREEN_NAMES[@]}"; do
   echo "Restarting screen instance ${SCREEN_NAME}"  
   screen -X -S ${SCREEN_NAME} quit 2>/dev/null || true # Kill screen instance if exists
   if [ "$ACTION" != "stop" ]; then
     screen -dmS ${SCREEN_NAME} python3 /usr/lib/redborder/producers/py/${SCREEN_NAME}.py #${FAST_MODE:+--fast}
   fi
+  echo "Screen instance ${SCREEN_NAME} created. Watch it running screen -r ${SCREEN_NAME}"
 done
 
-echo "Screen instance ${SCREEN_NAME} created. Watch it running screen -r ${SCREEN_NAME}"
 screen -ls
