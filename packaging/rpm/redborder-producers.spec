@@ -42,7 +42,7 @@ mkdir -p %{buildroot}/usr/lib/redborder/producers/py
 mkdir -p %{buildroot}/usr/lib/redborder/producers/json
 mkdir -p %{buildroot}/usr/share/%{name}
 
-install -m 755 resources/bin/rb_synthetic_producers.sh %{buildroot}/usr/lib/redborder/bin/
+install -m 755 resources/bin/rb_producer_simulator.sh %{buildroot}/usr/lib/redborder/bin/
 
 install -m 755 resources/producers/py/at1_reconocimiento_scan.py %{buildroot}/usr/lib/redborder/producers/py/
 install -m 755 resources/producers/py/at2_resource_development_ssl.py %{buildroot}/usr/lib/redborder/producers/py/
@@ -79,7 +79,7 @@ install -m 644 requirements.txt %{buildroot}/usr/lib/redborder/producers/
 
 %files
 %defattr(755,root,root)
-/usr/lib/redborder/bin/rb_synthetic_producers.sh
+/usr/lib/redborder/bin/rb_producer_simulator.sh
 
 /usr/lib/redborder/producers/py/at1_reconocimiento_scan.py
 /usr/lib/redborder/producers/py/at2_resource_development_ssl.py
