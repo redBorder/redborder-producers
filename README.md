@@ -19,6 +19,18 @@ The configuration files tweak the properties of the producers, but there are som
 # Main command
 rb_producer_simulator.sh: Start one or multiple producers in pararell by using screen instances, one for each data source.
 
+## Usage
+You can run the script without arguments to run every producers at once:
+```bash
+rb_producer_simulator.sh
+```
+
+But if you want to run only one producer, you can use the argument -s:
+```bash
+rb_producer_simulator.sh -s <traffic|scanner|vault>
+```
+
+
 # Building the rpm package
 On Release section, you can find already stable rpms, but if you want to build the rpm from the source code. You can execute the following command on top of the repository path:
 
