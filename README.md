@@ -22,14 +22,18 @@ rb_producer_simulator.sh: Start one or multiple producers in pararell by using s
 ## Usage
 You can run the script without arguments to run every producers at once:
 ```bash
-rb_producer_simulator.sh
+rb_producer_simulator.sh <start|stop|restart>
 ```
 
 But if you want to run only one producer, you can use the argument -s:
 ```bash
-rb_producer_simulator.sh -s <traffic|scanner|vault>
+rb_producer_simulator.sh <start|stop|restart> -s <traffic|scanner|vault>
 ```
 
+Check usage to confirm with the helper:
+```bash
+rb_producer_simulator.sh -h
+```
 
 # Building the rpm package
 On Release section, you can find already stable rpms, but if you want to build the rpm from the source code. You can execute the following command on top of the repository path:
