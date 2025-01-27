@@ -114,4 +114,4 @@ if __name__ == "__main__":
   parser = argparse.ArgumentParser()
   parser.add_argument('-d', '--duration', type=int, default=-1, help='Duration in seconds (default: 5)')
   args = parser.parse_args()
-  run_producer(generate_vault, args.duration, topic='rb_event', time_range=(5, 60))
+  run_producer(generate_vault, args.duration, topic='rb_vault', time_range=(5, 60))
