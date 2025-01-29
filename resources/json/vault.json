@@ -1,0 +1,17 @@
+{
+  "vaults": [{
+    "pri": "14",
+    "pri_text": "user.info",
+    "syslogfacility": "1",
+    "syslogfacility_text": "user",
+    "syslogseverity": "6",
+    "syslogseverity_text": "info",
+    "protocol_version": "0",
+    "procid": "4087",
+    "msgid": "-",
+    "structured_data": "-",
+    "tag": "",
+    "hash": "",
+    "inputname": "imtcp"
+  }]
+}

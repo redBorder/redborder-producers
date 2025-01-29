@@ -1,13 +1,9 @@
-#!/usr/bin/env python3
-from kafka import KafkaProducer
-import json
+#!/usr/bin/python3
 import time
 import random
-from assets import random_lan, lan_devices, random_malicious_ip, random_port, random_mac
-
-# Configura el productor de Kafka
-producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
-                         value_serializer=lambda v: json.dumps(v).encode('utf-8'))
+from assets import random_lan, random_malicious_ip, random_port, random_mac
+from sensors import get_random_sensor
+from producer import run_producer
 
 # Active Scanning T1595
 def generate_active_scanning_event():
@@ -57,43 +53,21 @@ def generate_active_scanning_event():
         "dgmlen": 92,
         "group_uuid": "f1b4eeb4-12e1-464c-821f-2439564ec585",
         "group_name": "outside",
-        "sensor_type": "ips",
         "domain_name": "N/A",
-        "sensor_ip": "10.0.250.195",
         "index_partitions": 5,
         "index_replicas": 1,
-        "sensor_uuid": "df699ecd-fc05-41fd-a0a3-87ecd7da2245",
-        "sensor_name": "rbips-62ac2c7d",
-        "namespace": "Namespace Level Alfa",
-        "namespace_uuid": "352369f8-60fb-4b72-a603-d1d8393cca0a",
-        "organization": "TechSecure",
-        "organization_uuid": "4b839195-3d3a-4983-abc0-9731ea731cab",
-        "service_provider": "TechSecure Corp",
-        "service_provider_uuid": "c2238202-ce42-4235-814f-91d2e6e0122a",
         "campus": "N/A",
         "campus_uuid": "N/A",
         "building": "Main building",
-        "building_uuid": "8e004910-c5e7-4ca0-b9df-156b1f6ad0a6"
-    }
+        "building_uuid": "8e004910-c5e7-4ca0-b9df-156b1f6ad0a6",
+        **get_random_sensor('ips') # Merge sensor data
+        }
 
 # Produce mensajes continuamente simulando eventos de escaneo activo
-def run_producer(duration):
-    start_time = time.time()
-    try:
-        while duration < 0 or time.time() - start_time < duration:
-            data = generate_active_scanning_event()
-            producer.send('rb_event', value=data)  # Envía los eventos al topic de Kafka
-            print(f'Data sent: {data}')
-            time.sleep(1)  # Intervalo entre eventos
-    except KeyboardInterrupt:
-        pass
-    finally:
-        producer.close()
 
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--duration', type=int, default=5, help='Duration in seconds (default: 5)')
     args = parser.parse_args()
-    run_producer(args.duration)
-    
+    run_producer(generate_active_scanning_event, args.duration, topic='rb_event', time_range=(1, 1))
