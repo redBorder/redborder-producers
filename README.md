@@ -20,14 +20,14 @@ The configuration files tweak the properties of the producers, but there are som
 rb_producer_simulator.sh: Start one or multiple producers in pararell by using screen instances, one for each data source.
 
 ## Usage
-You can run the script without arguments to run every producers at once:
+You can run the script with always the action argument to run every producers at once:
 ```bash
-rb_producer_simulator.sh <start|stop|restart>
+rb_producer_simulator.sh -a <start|stop|restart>
 ```
 
 But if you want to run only one producer, you can use the argument -s:
 ```bash
-rb_producer_simulator.sh <start|stop|restart> -s <traffic|scanner|vault>
+rb_producer_simulator.sh -a <start|stop|restart> -s <traffic|scanner|vault>
 ```
 
 Check usage to confirm with the helper:
