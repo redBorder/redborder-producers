@@ -99,7 +99,7 @@ def get_random_sensor(type):
   elif type == 'vault':
     sensors = VAULT_SENSORS
   elif type == 'monitor':
-    sensors = VAULT_SENSORS
+    sensors = MONITOR_SENSORS
   elif type == 'scanner':
     sensors = SCANNER_SENSORS
   else:
