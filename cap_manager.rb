@@ -49,9 +49,38 @@ def get_pcap_files(args)
   files
 end
 
+def put_interface_up()
+  interface_exists = system("ip link show eth1 > /dev/null 2>&1")
+  unless interface_exists
+    puts "Creating dummy interface eth1..."
+    system("sudo modprobe dummy")
+    system("sudo ip link add eth1 type dummy")
+    system("sudo ifconfig eth1 hw ether 00:11:22:33:44:55")
+  end
+
+  is_ip_configured = system("ip addr show eth1 | grep '10.1.32.201' > /dev/null 2>&1")
+  unless is_ip_configured
+    puts "Configuring IP address for eth1..."
+    system("sudo ip addr add 10.1.32.201/24 dev eth1 label eth1:0")
+  end
+
+  is_interface_up = system("ip link show eth1 | grep 'UP' > /dev/null 2>&1")
+  unless is_interface_up
+    puts "Bringing up interface eth1..."
+    system("sudo ip link set eth1 up")
+  end
+
+  is_promisc = system("ip link show eth1 | grep 'PROMISC' > /dev/null 2>&1")
+  unless is_promisc
+    puts "Setting eth1 to promiscuous mode..."
+    system("sudo ip link set eth1 promisc on")
+  end
+end
+
 def main
   args = parse_args
 
+  put_interface_up
   caps = get_pcap_files(args)
   open_pmacct(args)
   caps.each do |file|
