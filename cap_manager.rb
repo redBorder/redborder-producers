@@ -20,7 +20,7 @@ def parse_args
   end
 
   parser.parse!
-  options[:path] ||= '/home/ljblanco/Descargas/w3stomz/'
+  options[:path] ||= '/home/ljblanco/Descargas/w3stormz/'
   options[:config] ||= '/home/ljblanco/Repos/redborder/ng/pmacct/pmmactd_synth.conf'
   options
 end
@@ -44,9 +44,9 @@ def get_pcap_files(args)
     exit 1
   end
 
-  files = list_files(File.absolute_path(pcap_dir))
+  files = list_files(File.absolute_path(args[:path]))
   if files.empty?
-    puts "No files found in #{pcap_dir}"
+    puts "No files found in #{args[:path]}"
     exit 1
   end
   files
