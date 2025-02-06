@@ -51,7 +51,8 @@ def open_pmacct(args)
   return if container_running
 
   puts 'Starting pmacct docker container...'
-  system("sudo docker run --privileged --network host -v #{args[:config]}:/etc/pmacct/pmacctd.conf #{container}")
+  system("sudo docker run -d --privileged --network host -v #{args[:config]}:/etc/pmacct/pmacctd.conf #{container}")
+  sleep 10
 end
 
 def get_pcap_files(args)
