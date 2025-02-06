@@ -17,11 +17,15 @@ def parse_args
     opts.banner = usage
     opts.on('-p', '--path PATH', 'Path to pcap directory') { |path| options[:path] = path }
     opts.on('-c', '--config CONFIG', 'Path to pmacct config file') { |config| options[:config] = config }
+    opts.on('-i', '--interface INTERFACE', 'Interface name') { |interface| options[:interface] = interface }
+    opts.on('-a', '--address IP', 'IP address') { |ip| options[:ip] = ip }
   end
 
   parser.parse!
   options[:path] ||= '/home/ljblanco/Descargas/w3stormz/'
   options[:config] ||= '/home/ljblanco/Repos/redborder/ng/pmacct/pmmactd_synth.conf'
+  options[:interface] ||= 'exporter'
+  options[:ip] ||= '10.1.32.201'
   options
 end
 
@@ -30,6 +34,18 @@ def list_files(path)
 end
 
 def open_pmacct(args)
+  unless File.exist?(args[:config])
+    puts "Error: Config file #{args[:config]} does not exist"
+    exit 1
+  end
+
+  config_content = File.read(args[:config])
+  unless config_content.include?(args[:interface]) && config_content.include?(args[:ip])
+    puts "Error: Config file must contain '#{args[:interface]}' and '#{args[:ip]}'"
+    puts config_content
+    exit 1
+  end
+
   container = 'pmacct/pmacctd:latest'
   container_running = system("docker ps | grep #{container}")
   return if container_running
@@ -52,38 +68,38 @@ def get_pcap_files(args)
   files
 end
 
-def put_interface_up()
-  interface_exists = system("ip link show eth1 > /dev/null 2>&1")
+def put_interface_up(args)
+  interface_exists = system("ip link show #{args[:interface]} > /dev/null 2>&1")
   unless interface_exists
-    puts 'Creating dummy interface eth1...'
+    puts "Creating dummy interface #{args[:interface]}..."
     system('sudo modprobe dummy')
-    system('sudo ip link add eth1 type dummy')
-    system('sudo ifconfig eth1 hw ether 00:11:22:33:44:55')
+    system("sudo ip link add #{args[:interface]} type dummy")
+    system("sudo ifconfig #{args[:interface]} hw ether 00:11:22:33:44:55")
   end
 
-  is_ip_configured = system("ip addr show eth1 | grep '10.1.32.201' > /dev/null 2>&1")
+  is_ip_configured = system("ip addr show #{args[:interface]} | grep '#{args[:ip]}' > /dev/null 2>&1")
   unless is_ip_configured
-    puts 'Configuring IP address for eth1...'
-    system('sudo ip addr add 10.1.32.201/24 dev eth1 label eth1:0')
+    puts "Configuring IP address for #{args[:interface]}..."
+    system("sudo ip addr add #{args[:ip]}/24 dev #{args[:interface]} label #{args[:interface]}:0")
   end
 
-  is_interface_up = system("ip link show eth1 | grep 'UP' > /dev/null 2>&1")
+  is_interface_up = system("ip link show #{args[:interface]} | grep 'UP' > /dev/null 2>&1")
   unless is_interface_up
-    puts 'Bringing up interface eth1...'
-    system('sudo ip link set eth1 up')
+    puts "Bringing up interface #{args[:interface]}..."
+    system("sudo ip link set #{args[:interface]} up")
   end
 
-  is_promisc = system("ip link show eth1 | grep 'PROMISC' > /dev/null 2>&1")
+  is_promisc = system("ip link show #{args[:interface]} | grep 'PROMISC' > /dev/null 2>&1")
   unless is_promisc
-    puts 'Setting eth1 to promiscuous mode...'
-    system('sudo ip link set eth1 promisc on') 
+    puts "Setting #{args[:interface]} to promiscuous mode..."
+    system("sudo ip link set #{args[:interface]} promisc on")
   end
 end
 
 def main
   args = parse_args
 
-  put_interface_up
+  put_interface_up(args)
   caps = get_pcap_files(args)
   open_pmacct(args)
   caps.each do |file|
