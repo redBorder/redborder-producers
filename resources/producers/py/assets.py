@@ -21,16 +21,16 @@ wan_devices = [
 ]
 wan_devices += [Device(ip=mal) for mal in MALICIOUS_IPS]
 lan_devices = [ #On deprecation
-    ("192.168.0.1", "00:1a:2b:3c:4d:5e", "Cisco Systems, Inc"),       #Main Router
-    ("192.168.0.10", "00:2b:3c:4d:5e:6f", "Cisco Systems, Inc"),      #BaseRouter
-    ("192.168.0.20", "00:3c:4d:5e:6f:7a", "Cisco Systems, Inc"),      #LabsRouter
-    ("192.168.0.30", "00:4d:5e:6f:7a:8b", "TP-Link Corp."),           #RecreationalRouter
-    ("192.168.0.100", "00:5e:6f:7a:8b:9c", "ASUSTek COMPUTER INC."),  #WebServer
-    ("192.168.0.110", "00:6f:7a:8b:9c:0d", "ASUSTek COMPUTER INC."),  #StoreageServer
-    ("192.168.3.10", "00:8b:9c:0d:1e:2f", "ASUSTek COMPUTER INC."),   #PCAlicia
-    ("192.168.3.11", "00:9c:0d:1e:2f:3a", "ASUSTek COMPUTER INC."),   #PCBob
-    ("192.168.3.12", "00:0d:1e:2f:3a:4b", "ASUSTek COMPUTER INC."),   #PCCarlos
-    ("192.168.3.13", "00:1e:3a:4b:ff:1a", "Dell Inc.")                #BasePrinter
+  ("192.168.0.1", "00:1a:2b:3c:4d:5e", "Cisco Systems, Inc"),       #Main Router
+  ("192.168.0.10", "00:2b:3c:4d:5e:6f", "Cisco Systems, Inc"),      #BaseRouter
+  ("192.168.0.20", "00:3c:4d:5e:6f:7a", "Cisco Systems, Inc"),      #LabsRouter
+  ("192.168.0.30", "00:4d:5e:6f:7a:8b", "TP-Link Corp."),           #RecreationalRouter
+  ("192.168.0.100", "00:5e:6f:7a:8b:9c", "ASUSTek COMPUTER INC."),  #WebServer
+  ("192.168.0.110", "00:6f:7a:8b:9c:0d", "ASUSTek COMPUTER INC."),  #StoreageServer
+  ("192.168.3.10", "00:8b:9c:0d:1e:2f", "ASUSTek COMPUTER INC."),   #PCAlicia
+  ("192.168.3.11", "00:9c:0d:1e:2f:3a", "ASUSTek COMPUTER INC."),   #PCBob
+  ("192.168.3.12", "00:0d:1e:2f:3a:4b", "ASUSTek COMPUTER INC."),   #PCCarlos
+  ("192.168.3.13", "00:1e:3a:4b:ff:1a", "Dell Inc.")                #BasePrinter
 ]
 
 user_devices_2 = [
@@ -75,13 +75,14 @@ def random_mac():
     return f"{random.randint(0, 255):02x}:{random.randint(0, 255):02x}:{random.randint(0, 255):02x}:{random.randint(0, 255):02x}:{random.randint(0, 255):02x}:{random.randint(0, 255):02x}"
 
 def random_port():
-  random.choice(list(range(10000,60000)))
+  return random.choice(list(range(10000,60000)))
 
 def random_malicious_ip():
-  random.choice(MALICIOUS_IPS)
+  return random.choice(MALICIOUS_IPS)
 
 def random_wan():
   return random.choice(wan_devices)
+
 def random_vendor():
    return random.choice([
        "Cisco Systems, Inc",
@@ -103,48 +104,40 @@ def random_vendor():
    ])
 
 def random_application():
-  return random.choice([
-    "13:443","13:443","13:443","13:443",
-    "HTTP",    "HTTP",    "HTTP",    "HTTP",    "HTTP",    "HTTP",    "HTTP",    "HTTP",    "HTTP",    "HTTP",    "HTTP",
-    "HTTPS",    "HTTPS",    "HTTPS",    "HTTPS",    "HTTPS",    "HTTPS",    "HTTPS",    "HTTPS",    "HTTPS",    "HTTPS",    "HTTPS",    "HTTPS",    "HTTPS",    "HTTPS",    "HTTPS",    "HTTPS",    "HTTPS",    "HTTPS",    "HTTPS",    "HTTPS",    "HTTPS",    "HTTPS",    "HTTPS",    "HTTPS",    "HTTPS",    "HTTPS",    "HTTPS",    "HTTPS",    "HTTPS",    "HTTPS",    "HTTPS",
-    "FTP",
-    "SSH",
-    "SMTP",
-    "POP3",
-    "IMAP",
-    "DNS",    "DNS",
-    "DNS",
-    "DNS",
-    "DNS",
-    "DNS",
-    "DNS",
-    "DHCP",
-    "NTP",
-    "Telnet",
-    "SNMP",    "SNMP",
-    "SNMP",
-    "SNMP",
-    "SNMP",
-    "SNMP",
-    "LDAP",    "LDAP",    "LDAP",    "LDAP",    "LDAP",    "LDAP",    "LDAP",    "LDAP",
-    "RDP",
-    "VNC",
-    "RTSP",
-    "RTP",
-    "RTCP",
-    "SIP",    "SIP",    "SIP",    "SIP",    "SIP",    "SIP",    "SIP",
-    "STUN",
-    "TURN",
-    "ICE",
-    "DTLS",
-    "CoAP",
-    "MQTT",
-    "XMPP",
-    "XMPP-TLS",
-    "XMPP-STARTTLS",
-    "XMPP-SASL",
-    "XMPP-SASL-PLAIN",
-    "XMPP-SASL-DIGEST-MD5",
-    "XMPP-SASL-DIGEST-MD5-CHALLENGE",
-    "XMPP-SASL-DIGEST-MD5-CHALLENGE-RESPONSE"
-  ])
+  application_distribution = {
+    "13:443": 0.04,
+    "HTTP": 0.10,
+    "HTTPS": 0.30,
+    "FTP": 0.01,
+    "SSH": 0.01,
+    "SMTP": 0.01,
+    "POP3": 0.01,
+    "IMAP": 0.01,
+    "DNS": 0.07,
+    "DHCP": 0.01,
+    "NTP": 0.01,
+    "Telnet": 0.01,
+    "SNMP": 0.06,
+    "LDAP": 0.08,
+    "RDP": 0.01,
+    "VNC": 0.01,
+    "RTSP": 0.01,
+    "RTP": 0.01,
+    "RTCP": 0.01,
+    "SIP": 0.07,
+    "STUN": 0.01,
+    "TURN": 0.01,
+    "ICE": 0.01,
+    "DTLS": 0.01,
+    "CoAP": 0.01,
+    "MQTT": 0.01,
+    "XMPP": 0.01,
+    "XMPP-TLS": 0.01,
+    "XMPP-STARTTLS": 0.01,
+    "XMPP-SASL": 0.01,
+    "XMPP-SASL-PLAIN": 0.01,
+    "XMPP-SASL-DIGEST-MD5": 0.01,
+    "XMPP-SASL-DIGEST-MD5-CHALLENGE": 0.01,
+    "XMPP-SASL-DIGEST-MD5-CHALLENGE-RESPONSE": 0.01
+  }
+  return random.choices(tuple(application_distribution), weights=tuple(application_distribution.values()))[0]
