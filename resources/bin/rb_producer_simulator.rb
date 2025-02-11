@@ -19,7 +19,8 @@ if opt['h']
   exit 0
 end
 
-VALID_SCREEN_NAMES = %w[traffic mitre_wide_attack monitor vault scanner]
+VALID_SCREEN_NAMES = %w[traffic mitre_wide_attack monitor vault scanner 
+bit_torrent] #custom incidents
 screen_name ||= opt['s']
 if !screen_name.nil? && !VALID_SCREEN_NAMES.include?(screen_name)
   puts "Error: Screen name must be one of: #{VALID_SCREEN_NAMES.join(', ')}"
@@ -40,7 +41,11 @@ screen_names.each do |s|
   puts "Restarting screen instance #{s}"
   system("screen -X -S #{s} quit 2>/dev/null || true") # Kill screen instance if exists
   unless action == 'stop'
-    system("screen -dmS #{s} python3 /usr/lib/redborder/producers/py/#{s}.py")
+    if s == 'bit_torrent'
+      system("screen -dmS #{s} ruby /usr/lib/redborder/bin/bit_torrent_producer.rb")
+    else
+      system("screen -dmS #{s} python3 /usr/lib/redborder/producers/py/#{s}.py")
+    end
     puts "Screen instance #{s} created. Watch it running screen -r #{s}"
   end
 end
