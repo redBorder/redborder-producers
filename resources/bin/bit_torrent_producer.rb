@@ -5,7 +5,7 @@ require 'json'
 require 'time'
 require 'kafka'
 
-FILENAME = 'bit_torrent.json'
+FILENAME = '/usr/lib/redborder/producers/json/bit_torrent.json'
 MAX_BATCH_SIZE = 100
 BATCH_INTERVAL = 60 # seconds
 
