@@ -12,7 +12,7 @@ BATCH_INTERVAL = 60 # seconds
 # Initialize Kafka producer
 kafka = Kafka.new(seed_brokers: ['kafka://localhost:9092'])
 producer = kafka.producer
-
+NAMESPACE_UUID = '352369f8-60fb-4b72-a603-d1d8393cca0a'
 def modify_timestamp(json_data)
   json_data['timestamp'] = Time.now.utc.iso8601
   json_data
@@ -58,7 +58,7 @@ def replay_messages(json_file, producer)
 end
 
 def deliver_batch(producer, batch)
-  batch.each { |message| producer.produce(message, topic: "rb_event_post_#{namespace_uuid}") }
+  batch.each { |message| producer.produce(message, topic: "rb_event_post_#{NAMESPACE_UUID}") }
   producer.deliver_messages
   puts "Delivered batch of #{batch.size} messages"
 end
