@@ -6,15 +6,14 @@ require 'time'
 require 'kafka'
 
 FILENAME = '/usr/lib/redborder/producers/json/bit_torrent.json'
-MAX_BATCH_SIZE = 100
-BATCH_INTERVAL = 60 # seconds
 
 # Initialize Kafka producer
-kafka = Kafka.new(seed_brokers: ['kafka://localhost:9092'])
+kafka = Kafka.new(['localhost:9092'])
 producer = kafka.producer
 NAMESPACE_UUID = '352369f8-60fb-4b72-a603-d1d8393cca0a'
-def modify_timestamp(json_data)
-  json_data['timestamp'] = Time.now.utc.iso8601
+def modify_timestamp(json_data, real_last_time)
+  puts json_data
+  json_data['timestamp'] = json_data['timestamp'] + real_last_time
   json_data
 end
 
@@ -24,43 +23,28 @@ end
 
 def replay_messages(json_file, producer)
   messages = read_json_file(json_file)
-
-  start_timestamp = messages[0]['timestamp']
-  real_start_time = Time.now.to_f
-
-  batch = []
-  last_delivery = Time.now
+  real_last_time = messages.last['timestamp']
 
   messages.each do |message|
-    # Sleep based on timestamp difference to simulate real-time replay
-    elapsed_original = message['timestamp'] - start_timestamp
-    current_time = Time.now.to_f
-    sleep_time = real_start_time + elapsed_original - current_time
-    sleep(sleep_time) if sleep_time.positive?
+    # sleep_time = 
+    # sleep(sleep_time) if sleep_time.positive?
 
     # Modify the timestamp and add to batch
-    modified_message = modify_timestamp(message)
-    batch << modified_message.to_json
+    modified_message = modify_timestamp(message, real_last_time)
 
-    # Deliver batch if conditions are met
-    next unless (Time.now - last_delivery >= BATCH_INTERVAL) || (batch.size >= MAX_BATCH_SIZE)
-
-    deliver_batch(producer, batch)
-    batch.clear
-    last_delivery = Time.now
+    begin
+      producer.produce(modified_message.to_json, topic: 'rb_event_post_' + NAMESPACE_UUID)
+      producer.deliver_messages
+    rescue => e
+      puts "Error delivering message: #{e.message}"
+      sleep 1 # Add delay before retrying
+      retry
+    end    
+    puts "Delivered message"
   end
-
-  # Deliver any remaining messages
-  deliver_batch(producer, batch) unless batch.empty?
 
   # Close the producer
   producer.shutdown
-end
-
-def deliver_batch(producer, batch)
-  batch.each { |message| producer.produce(message, topic: "rb_event_post_#{NAMESPACE_UUID}") }
-  producer.deliver_messages
-  puts "Delivered batch of #{batch.size} messages"
 end
 
 # Start the message replay process
