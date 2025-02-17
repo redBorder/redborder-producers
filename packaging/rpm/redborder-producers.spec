@@ -63,6 +63,7 @@ install -m 755 resources/producers/py/producer_traffic.py %{buildroot}/usr/lib/r
 install -m 755 resources/producers/py/scanner.py %{buildroot}/usr/lib/redborder/producers/py/
 install -m 755 resources/producers/py/traffic.py %{buildroot}/usr/lib/redborder/producers/py/
 install -m 755 resources/producers/py/vault.py %{buildroot}/usr/lib/redborder/producers/py/
+install -m 755 resources/producers/py/bit_torrent_event_producer.py %{buildroot}/usr/lib/redborder/producers/py/
 
 install -m 644 resources/producers/py/vulnerability.py %{buildroot}/usr/lib/redborder/producers/py/
 install -m 644 resources/producers/py/assets.py %{buildroot}/usr/lib/redborder/producers/py/
@@ -100,6 +101,7 @@ install -m 644 requirements.txt %{buildroot}/usr/lib/redborder/producers/
 /usr/lib/redborder/producers/py/scanner.py
 /usr/lib/redborder/producers/py/traffic.py
 /usr/lib/redborder/producers/py/vault.py
+/usr/lib/redborder/producers/py/bit_torrent_event_producer.py
 
 %defattr(644,root,root)
 /usr/share/%{name}
