@@ -66,6 +66,7 @@ def get_pcap_files(args)
     puts "No files found in #{args[:path]}"
     exit 1
   end
+
   files
 end
 
@@ -95,6 +96,12 @@ def put_interface_up(args)
     puts "Setting #{args[:interface]} to promiscuous mode..."
     system("sudo ip link set #{args[:interface]} promisc on")
   end
+
+  is_mtu_extend = system("ip link show #{args[:interface]} | grep '9000' > /dev/null 2>&1")
+  unless is_mtu_extend
+    puts "Bringing up interface #{args[:interface]}..."
+    system("sudo ip link set #{args[:interface]} mtu 65535")
+  end
 end
 
 def main
@@ -103,17 +110,29 @@ def main
   put_interface_up(args)
   caps = get_pcap_files(args)
   open_pmacct(args)
+  caps.select! { |f| f.end_with?('.pcap') }
+  caps.reject! { |f| f.end_with?('_rewritten.pcap') }
+  # caps.each do |file|
+  #   begin
+  #     next unless file.include?('.cap')
+  #     # Process each file
+  #     puts "Processing: #{file}"
+  #     pcap_file = "#{File.dirname(file)}/#{File.basename(file, '.cap')}.pcap"
+  #     puts pcap_file
+  #     puts 'Expected name.pcap'
+  #     system("editcap -F pcap #{file} #{pcap_file}") unless File.exist?(pcap_file)
+
+  #     rewritten_file = "#{File.dirname(file)}/#{File.basename(pcap_file, '.pcap')}_rewritten.pcap"
+  #     puts rewritten_file
+  #     puts 'Expected name_rewritten.pcap'
+  #     system("tcprewrite --infile=#{pcap_file} --outfile=#{rewritten_file} --pnat=10.0.0.0/8:11.0.0.0/8") unless File.exist?(rewritten_file)
+  #   rescue StandardError => e
+  #     puts "Error processing #{file}: #{e.message}"
+  #   end
+  # end
+
   caps.each do |file|
-    begin
-      # Process each file
-      puts "Processing: #{file}"
-      pcap_file = "#{File.dirname(file)}/#{File.basename(file, '.cap')}.pcap"
-      system("editcap -F pcap #{file} #{pcap_file}") unless File.exist?(pcap_file)
-      rewritten_file = "#{File.dirname(file)}/#{File.basename(file, '.pcap')}_rewritten.pcap"
-      system("tcprewrite --infile=#{pcap_file} --outfile=#{rewritten_file} --pnat=10.0.0.0/8:11.0.0.0/8") unless File.exist?(rewritten_file)
-    rescue StandardError => e
-      puts "Error processing #{file}: #{e.message}"
-    end
+    system "sudo tcpreplay -i #{args[:interface]} #{file}"
   end
 end
 
