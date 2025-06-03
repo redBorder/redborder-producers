@@ -1,0 +1,71 @@
+#!/usr/bin/env ruby
+
+require 'pg'
+require 'securerandom'
+require 'yaml'
+require 'time'
+
+# Ruta al archivo database.yml
+db_config_path = '/var/www/rb-rails/config/database.yml'
+
+# Carga el archivo YAML
+config = YAML.load_file(db_config_path)
+
+# Encuentra la sección cuyo nombre de base de datos contenga "redborder"
+env_key, env_config = config.find { |_, conf| conf['database']&.include?('redborder') }
+
+if env_config.nil?
+  abort("❌ No se encontró una configuración con 'redborder' en database.yml")
+end
+
+# Extrae los parámetros
+db_name = env_config['database']
+db_user = env_config['username']
+db_password = env_config['password']
+db_host = env_config['host']
+db_port = env_config['port'] || 5432
+
+# Conexión
+conn = PG.connect(
+  dbname: db_name,
+  user: db_user,
+  password: db_password,
+  host: db_host,
+  port: db_port
+)
+
+# Datos a insertar
+uuid = SecureRandom.uuid
+name = 'Incidente automático'
+source = 'Intrusion'
+description = 'Generado por script Ruby'
+incident_status_id = 1
+priority_id = 2
+created_at = Time.now
+updated_at = Time.now
+visible = true
+sent = false
+failure_count = 0
+sensor_id = 1
+outliers = false
+sent_timestamp = nil
+
+# Inserta la fila
+conn.exec_params(
+  "INSERT INTO incidents (
+     uuid, name, source, description, incident_status_id,
+     priority_id, created_at, updated_at, visible, sent,
+     failure_count, sensor_id, outliers, sent_timestamp
+   ) VALUES (
+     $1, $2, $3, $4, $5,
+     $6, $7, $8, $9, $10,
+     $11, $12, $13, $14
+   )",
+  [
+    uuid, name, source, description, incident_status_id,
+    priority_id, created_at, updated_at, visible, sent,
+    failure_count, sensor_id, outliers, sent_timestamp
+  ]
+)
+
+puts "✅ Incidente creado con UUID: #{uuid} en entorno '#{env_key}'"
