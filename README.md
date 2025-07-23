@@ -10,7 +10,7 @@ This is an auxiliar package for redborder-manager, which is expected to be insta
 
 Additionally each required module is expected to be enabled. 
 
-Particularly with intrusion, which needs to be patched on the logstash condition if ips sensor is not claimed. So open this file: /var/chef/cookbooks/rb-manager/libraries/get_pipelines.rb, comment the condition in order to always make intrusion pipeline available, and update the cookbook with knife cookbook upload rb-manager
+Particularly with intrusion, which needs to be patched on the logstash condition if ips sensor is not claimed. So check file /etc/logstash/pipelines.yml to see intrusion-pipeline is there. If not, open this file: /var/chef/cookbooks/rb-manager/libraries/get_pipelines.rb, comment the condition in order to always make intrusion pipeline available, and update the cookbook with knife cookbook upload rb-manager
 
 # Setup
 The configuration files tweak the properties of the producers, but there are some that really need to be changed:
